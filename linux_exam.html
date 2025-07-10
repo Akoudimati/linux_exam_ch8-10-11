@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Exam Practice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .exam-container {
+            padding: 40px;
+        }
+
+        .question {
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .question h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .options {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .options li {
+            margin: 10px 0;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #ecf0f1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options li:hover {
+            border-color: #3498db;
+            background: #ebf3fd;
+        }
+
+        .options li.selected {
+            background: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+
+        .options li.correct {
+            background: #27ae60;
+            color: white;
+            border-color: #229954;
+        }
+
+        .options li.incorrect {
+            background: #e74c3c;
+            color: white;
+            border-color: #c0392b;
+        }
+
+        .command-input {
+            width: 100%;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            background: #2c3e50;
+            color: #ecf0f1;
+        }
+
+        .command-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+        }
+
+        .score-container {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+
+        .explanation {
+            background: #e8f5e8;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+            color: white;
+            padding: 20px;
+            margin: 30px 0 20px 0;
+            border-radius: 10px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .progress-bar {
+            background: #ecf0f1;
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .terminal-simulation {
+            background: #1a1a1a;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .terminal-prompt {
+            color: #00ff00;
+        }
+
+        .terminal-output {
+            color: #ffffff;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="background: #2c3e50; color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
+            <a href="index.html" style="color: white; text-decoration: none; font-weight: bold;">🏠 Back to Home</a>
+        </div>
+        <div class="header">
+            <h1>🐧 Linux Exam Practice</h1>
+            <p>Master Linux Commands, File Operations, Vi Editor, and Shell Scripting</p>
+        </div>
+
+        <div class="exam-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="score-container" id="scoreContainer" style="display: none;">
+                <h2>Your Score: <span id="finalScore">0</span>/30</h2>
+                <p id="scoreMessage"></p>
+            </div>
+
+            <!-- Globbing Section -->
+            <div class="section-title">🔍 Globbing (Wildcards)</div>
+            
+            <div class="question" data-answer="2">
+                <h3>1. What does the asterisk (*) glob character match?</h3>
+                <ul class="options">
+                    <li data-value="1">Exactly one character</li>
+                    <li data-value="2">Zero or more characters</li>
+                    <li data-value="3">Only alphabetic characters</li>
+                    <li data-value="4">Only numeric characters</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The asterisk (*) matches zero or more characters in a filename. For example, "D*" matches all files starting with "D".
+                </div>
+            </div>
+
+            <div class="question" data-answer="1">
+                <h3>2. What does the question mark (?) glob character match?</h3>
+                <ul class="options">
+                    <li data-value="1">Exactly one character</li>
+                    <li data-value="2">Zero or more characters</li>
+                    <li data-value="3">A range of characters</li>
+                    <li data-value="4">No characters</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The question mark (?) matches exactly one character, no more and no less. For example, "??????" matches files with exactly 6 characters.
+                </div>
+            </div>
+
+            <div class="question" data-answer="3">
+                <h3>3. What does the pattern [DP]* match?</h3>
+                <ul class="options">
+                    <li data-value="1">Files containing D or P anywhere</li>
+                    <li data-value="2">Files ending with D or P</li>
+                    <li data-value="3">Files starting with D or P</li>
+                    <li data-value="4">Files with exactly D or P</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> [DP]* matches files that start with either D or P, followed by zero or more characters.
+                </div>
+            </div>
+
+            <div class="question" data-answer="2">
+                <h3>4. What does the pattern [!DP]* match?</h3>
+                <ul class="options">
+                    <li data-value="1">Files starting with D or P</li>
+                    <li data-value="2">Files NOT starting with D or P</li>
+                    <li data-value="3">Files containing D and P</li>
+                    <li data-value="4">Empty files</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The exclamation mark (!) negates the character class, so [!DP]* matches files that do NOT start with D or P.
+                </div>
+            </div>
+
+            <div class="question" data-answer="4">
+                <h3>5. Which command displays all files ending with 's'?</h3>
+                <ul class="options">
+                    <li data-value="1">echo s*</li>
+                    <li data-value="2">echo ?s</li>
+                    <li data-value="3">echo [s]*</li>
+                    <li data-value="4">echo *s</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> echo *s displays all files ending with 's'. The asterisk matches zero or more characters before the 's'.
+                </div>
+            </div>
+
+            <!-- File Operations Section -->
+            <div class="section-title">📁 File Operations</div>
+
+            <div class="question" data-answer="1">
+                <h3>6. Which command copies a file while preserving its attributes?</h3>
+                <ul class="options">
+                    <li data-value="1">cp -p source destination</li>
+                    <li data-value="2">cp -v source destination</li>
+                    <li data-value="3">cp -r source destination</li>
+                    <li data-value="4">cp -a source destination</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The -p option preserves file attributes like timestamps and permissions when copying.
+                </div>
+            </div>
+
+            <div class="question" data-answer="3">
+                <h3>7. Which command recursively copies directories?</h3>
+                <ul class="options">
+                    <li data-value="1">cp -p source destination</li>
+                    <li data-value="2">cp -v source destination</li>
+                    <li data-value="3">cp -R source destination</li>
+                    <li data-value="4">cp -l source destination</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The -R (recursive) option allows copying directories and their contents.
+                </div>
+            </div>
+
+            <div class="question" data-answer="2">
+                <h3>8. What does the mv command do?</h3>
+                <ul class="options">
+                    <li data-value="1">Only moves files</li>
+                    <li data-value="2">Moves and renames files</li>
+                    <li data-value="3">Only copies files</li>
+                    <li data-value="4">Only deletes files</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The mv command both moves files to different locations and renames them.
+                </div>
+            </div>
+
+            <div class="question" data-answer="1">
+                <h3>9. Which command removes directories and their contents?</h3>
+                <ul class="options">
+                    <li data-value="1">rm -r directory</li>
+                    <li data-value="2">rm directory</li>
+                    <li data-value="3">rmdir directory</li>
+                    <li data-value="4">del directory</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> rm -r removes directories and their contents recursively. rmdir only works on empty directories.
+                </div>
+            </div>
+
+            <div class="question" data-answer="3">
+                <h3>10. What does the period (.) represent in Linux?</h3>
+                <ul class="options">
+                    <li data-value="1">Home directory</li>
+                    <li data-value="2">Root directory</li>
+                    <li data-value="3">Current directory</li>
+                    <li data-value="4">Parent directory</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The period (.) represents the current directory in Linux.
+                </div>
+            </div>
+
+            <!-- Text Processing Section -->
+            <div class="section-title">📝 Text Processing & Redirection</div>
+
+            <div class="question" data-answer="2">
+                <h3>11. What does the > symbol do in Linux?</h3>
+                <ul class="options">
+                    <li data-value="1">Appends output to a file</li>
+                    <li data-value="2">Redirects output to a file (overwrites)</li>
+                    <li data-value="3">Reads input from a file</li>
+                    <li data-value="4">Pipes output to another command</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The > symbol redirects output to a file, overwriting existing content.
+                </div>
+            </div>
+
+            <div class="question" data-answer="1">
+                <h3>12. What does the >> symbol do?</h3>
+                <ul class="options">
+                    <li data-value="1">Appends output to a file</li>
+                    <li data-value="2">Redirects output to a file (overwrites)</li>
+                    <li data-value="3">Reads input from a file</li>
+                    <li data-value="4">Pipes output to another command</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The >> symbol appends output to a file without overwriting existing content.
+                </div>
+            </div>
+
+            <div class="question" data-answer="4">
+                <h3>13. What does the | (pipe) symbol do?</h3>
+                <ul class="options">
+                    <li data-value="1">Redirects output to a file</li>
+                    <li data-value="2">Appends output to a file</li>
+                    <li data-value="3">Reads input from a file</li>
+                    <li data-value="4">Sends output of one command to another</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The pipe (|) sends the output of one command as input to another command.
+                </div>
+            </div>
+
+            <div class="question" data-answer="2">
+                <h3>14. Which command displays the first 10 lines of a file?</h3>
+                <ul class="options">
+                    <li data-value="1">tail filename</li>
+                    <li data-value="2">head filename</li>
+                    <li data-value="3">more filename</li>
+                    <li data-value="4">less filename</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The head command displays the first 10 lines of a file by default.
+                </div>
+            </div>
+
+            <div class="question" data-answer="1">
+                <h3>15. Which command displays the last 10 lines of a file?</h3>
+                <ul class="options">
+                    <li data-value="1">tail filename</li>
+                    <li data-value="2">head filename</li>
+                    <li data-value="3">more filename</li>
+                    <li data-value="4">less filename</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The tail command displays the last 10 lines of a file by default.
+                </div>
+            </div>
+
+            <!-- Grep and Search Section -->
+            <div class="section-title">🔍 Grep and Search</div>
+
+            <div class="question" data-answer="3">
+                <h3>16. What does the grep command do?</h3>
+                <ul class="options">
+                    <li data-value="1">Copies files</li>
+                    <li data-value="2">Moves files</li>
+                    <li data-value="3">Searches for patterns in text</li>
+                    <li data-value="4">Deletes files</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The grep command searches for patterns in text files and displays matching lines.
+                </div>
+            </div>
+
+            <div class="question" data-answer="2">
+                <h3>17. What does the ^ symbol mean in grep?</h3>
+                <ul class="options">
+                    <li data-value="1">End of line</li>
+                    <li data-value="2">Beginning of line</li>
+                    <li data-value="3">Any character</li>
+                    <li data-value="4">Negation</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The ^ symbol matches the beginning of a line in grep patterns.
+                </div>
+            </div>
+
+            <div class="question" data-answer="1">
+                <h3>18. What does the $ symbol mean in grep?</h3>
+                <ul class="options">
+                    <li data-value="1">End of line</li>
+                    <li data-value="2">Beginning of line</li>
+                    <li data-value="3">Any character</li>
+                    <li data-value="4">Negation</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The $ symbol matches the end of a line in grep patterns.
+                </div>
+            </div>
+
+            <div class="question" data-answer="1">
+                <h3>19. Which command finds files and directories?</h3>
+                <ul class="options">
+                    <li data-value="1">find</li>
+                    <li data-value="2">grep</li>
+                    <li data-value="3">cat</li>
+                    <li data-value="4">echo</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The find command searches for files and directories based on various criteria.
+                </div>
+            </div>
+
+            <div class="question" data-answer="3">
+                <h3>20. What is the correct syntax for finding files by name?</h3>
+                <ul class="options">
+                    <li data-value="1">find -name filename</li>
+                    <li data-value="2">find filename -name</li>
+                    <li data-value="3">find /path -name filename</li>
+                    <li data-value="4">find filename /path</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The correct syntax is: find /path -name filename
+                </div>
+            </div>
+
+            <!-- Vi Editor Section -->
+            <div class="section-title">✏️ Vi Editor</div>
+
+            <div class="question" data-answer="1">
+                <h3>21. Which key enters insert mode in vi?</h3>
+                <ul class="options">
+                    <li data-value="1">i</li>
+                    <li data-value="2">a</li>
+                    <li data-value="3">o</li>
+                    <li data-value="4">All of the above</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> All of these keys enter insert mode: 'i' (insert), 'a' (append), 'o' (open new line).
+                </div>
+            </div>
+
+            <div class="question" data-answer="2">
+                <h3>22. How do you save and quit vi?</h3>
+                <ul class="options">
+                    <li data-value="1">:q</li>
+                    <li data-value="2">:wq</li>
+                    <li data-value="3">:w</li>
+                    <li data-value="4">:x</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> :wq saves the file and quits vi. :w saves, :q quits, :x also saves and quits.
+                </div>
+            </div>
+
+            <div class="question" data-answer="1">
+                <h3>23. Which key exits insert mode in vi?</h3>
+                <ul class="options">
+                    <li data-value="1">Esc</li>
+                    <li data-value="2">Ctrl+C</li>
+                    <li data-value="3">Enter</li>
+                    <li data-value="4">Space</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The Esc key exits insert mode and returns to command mode.
+                </div>
+            </div>
+
+            <div class="question" data-answer="3">
+                <h3>24. How do you search for text in vi?</h3>
+                <ul class="options">
+                    <li data-value="1">:search text</li>
+                    <li data-value="2">?text</li>
+                    <li data-value="3">/text</li>
+                    <li data-value="4">grep text</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> Use /text to search forward for text in vi. Use ?text to search backward.
+                </div>
+            </div>
+
+            <div class="question" data-answer="2">
+                <h3>25. How do you undo the last operation in vi?</h3>
+                <ul class="options">
+                    <li data-value="1">:undo</li>
+                    <li data-value="2">u</li>
+                    <li data-value="3">Ctrl+Z</li>
+                    <li data-value="4">:u</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> Press 'u' in command mode to undo the last operation.
+                </div>
+            </div>
+
+            <!-- Shell Scripting Section -->
+            <div class="section-title">🖥️ Shell Scripting</div>
+
+            <div class="question" data-answer="1">
+                <h3>26. What is the first line of a bash script?</h3>
+                <ul class="options">
+                    <li data-value="1">#!/bin/bash</li>
+                    <li data-value="2">#bash</li>
+                    <li data-value="3">#!/bash</li>
+                    <li data-value="4">/bin/bash</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> #!/bin/bash is the shebang line that tells the system which interpreter to use.
+                </div>
+            </div>
+
+            <div class="question" data-answer="2">
+                <h3>27. Which command makes a script executable?</h3>
+                <ul class="options">
+                    <li data-value="1">chmod 755 script.sh</li>
+                    <li data-value="2">chmod +x script.sh</li>
+                    <li data-value="3">chmod u+x script.sh</li>
+                    <li data-value="4">All of the above</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> All of these commands make a script executable, with different permission levels.
+                </div>
+            </div>
+
+            <div class="question" data-answer="3">
+                <h3>28. How do you read user input in a bash script?</h3>
+                <ul class="options">
+                    <li data-value="1">input variable</li>
+                    <li data-value="2">get variable</li>
+                    <li data-value="3">read variable</li>
+                    <li data-value="4">scan variable</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> Use 'read variable' to read user input into a variable.
+                </div>
+            </div>
+
+            <div class="question" data-answer="2">
+                <h3>29. How do you reference a variable in bash?</h3>
+                <ul class="options">
+                    <li data-value="1">variable</li>
+                    <li data-value="2">$variable</li>
+                    <li data-value="3">&variable</li>
+                    <li data-value="4">@variable</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> Use $variable or ${variable} to reference a variable's value.
+                </div>
+            </div>
+
+            <div class="question" data-answer="1">
+                <h3>30. What does the 'alias' command do?</h3>
+                <ul class="options">
+                    <li data-value="1">Creates shortcuts for commands</li>
+                    <li data-value="2">Copies files</li>
+                    <li data-value="3">Lists files</li>
+                    <li data-value="4">Deletes files</li>
+                </ul>
+                <div class="explanation">
+                    <strong>Correct!</strong> The alias command creates shortcuts or alternative names for commands.
+                </div>
+            </div>
+
+            <!-- Command Practice Section -->
+            <div class="section-title">💻 Command Practice</div>
+            
+            <div class="question">
+                <h3>Practice: Write a command to list all files starting with 'test'</h3>
+                <input type="text" class="command-input" id="cmd1" placeholder="Enter your command here...">
+                <button class="btn" onclick="checkCommand('cmd1', 'ls test*', 'echo test*')">Check Answer</button>
+                <div class="terminal-simulation" id="terminal1" style="display: none;">
+                    <div class="terminal-prompt">$ <span class="user-command"></span></div>
+                    <div class="terminal-output"></div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>Practice: Write a command to copy file.txt to backup.txt preserving attributes</h3>
+                <input type="text" class="command-input" id="cmd2" placeholder="Enter your command here...">
+                <button class="btn" onclick="checkCommand('cmd2', 'cp -p file.txt backup.txt')">Check Answer</button>
+                <div class="terminal-simulation" id="terminal2" style="display: none;">
+                    <div class="terminal-prompt">$ <span class="user-command"></span></div>
+                    <div class="terminal-output"></div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>Practice: Write a command to search for 'error' in log.txt</h3>
+                <input type="text" class="command-input" id="cmd3" placeholder="Enter your command here...">
+                <button class="btn" onclick="checkCommand('cmd3', 'grep error log.txt', 'grep error log.txt')">Check Answer</button>
+                <div class="terminal-simulation" id="terminal3" style="display: none;">
+                    <div class="terminal-prompt">$ <span class="user-command"></span></div>
+                    <div class="terminal-output"></div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="btn btn-submit" onclick="submitExam()">Submit Exam</button>
+                <button class="btn" onclick="resetExam()">Reset Exam</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let totalQuestions = 30;
+        let answeredQuestions = 0;
+
+        // Handle multiple choice questions
+        document.querySelectorAll('.options li').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.closest('.question');
+                const options = question.querySelectorAll('.options li');
+                
+                // Remove previous selections
+                options.forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selected class
+                this.classList.add('selected');
+                
+                // Store answer
+                question.setAttribute('data-selected', this.getAttribute('data-value'));
+            });
+        });
+
+        function checkCommand(inputId, ...correctAnswers) {
+            const input = document.getElementById(inputId);
+            const userCommand = input.value.trim().toLowerCase();
+            const terminal = document.getElementById(inputId.replace('cmd', 'terminal'));
+            
+            let isCorrect = false;
+            for (let correct of correctAnswers) {
+                if (userCommand === correct.toLowerCase()) {
+                    isCorrect = true;
+                    break;
+                }
+            }
+            
+            terminal.style.display = 'block';
+            terminal.querySelector('.user-command').textContent = input.value;
+            
+            if (isCorrect) {
+                terminal.querySelector('.terminal-output').innerHTML = 
+                    '<span style="color: #00ff00;">✓ Correct! Command executed successfully.</span>';
+                input.style.borderColor = '#27ae60';
+            } else {
+                terminal.querySelector('.terminal-output').innerHTML = 
+                    '<span style="color: #ff6b6b;">✗ Incorrect. Expected: ' + correctAnswers[0] + '</span>';
+                input.style.borderColor = '#e74c3c';
+            }
+        }
+
+        function submitExam() {
+            score = 0;
+            answeredQuestions = 0;
+            
+            // Check multiple choice questions
+            document.querySelectorAll('.question[data-answer]').forEach(question => {
+                const correctAnswer = question.getAttribute('data-answer');
+                const selectedAnswer = question.getAttribute('data-selected');
+                const explanation = question.querySelector('.explanation');
+                
+                if (selectedAnswer) {
+                    answeredQuestions++;
+                    if (selectedAnswer === correctAnswer) {
+                        score++;
+                        // Mark correct answers
+                        question.querySelector(`[data-value="${selectedAnswer}"]`).classList.add('correct');
+                    } else {
+                        // Mark incorrect answers
+                        question.querySelector(`[data-value="${selectedAnswer}"]`).classList.add('incorrect');
+                        // Show correct answer
+                        question.querySelector(`[data-value="${correctAnswer}"]`).classList.add('correct');
+                    }
+                    
+                    // Show explanation
+                    explanation.classList.add('show');
+                }
+            });
+            
+            // Update progress bar
+            const progressPercentage = (answeredQuestions / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progressPercentage + '%';
+            
+            // Show score
+            const scoreContainer = document.getElementById('scoreContainer');
+            const finalScore = document.getElementById('finalScore');
+            const scoreMessage = document.getElementById('scoreMessage');
+            
+            finalScore.textContent = score;
+            scoreContainer.style.display = 'block';
+            
+            let message = '';
+            let percentage = (score / totalQuestions) * 100;
+            
+            if (percentage >= 90) {
+                message = '🎉 Excellent! You\'re ready for the exam!';
+            } else if (percentage >= 80) {
+                message = '👍 Great job! Review the incorrect answers.';
+            } else if (percentage >= 70) {
+                message = '👌 Good work! Study the topics you missed.';
+            } else if (percentage >= 60) {
+                message = '📚 Keep studying! Focus on weak areas.';
+            } else {
+                message = '💪 Don\'t give up! Review all topics thoroughly.';
+            }
+            
+            scoreMessage.textContent = message;
+            
+            // Scroll to score
+            scoreContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetExam() {
+            score = 0;
+            answeredQuestions = 0;
+            
+            // Reset all questions
+            document.querySelectorAll('.question').forEach(question => {
+                question.removeAttribute('data-selected');
+                question.querySelectorAll('.options li').forEach(option => {
+                    option.classList.remove('selected', 'correct', 'incorrect');
+                });
+                question.querySelector('.explanation').classList.remove('show');
+            });
+            
+            // Reset command inputs
+            document.querySelectorAll('.command-input').forEach(input => {
+                input.value = '';
+                input.style.borderColor = '#bdc3c7';
+            });
+            
+            // Hide terminals
+            document.querySelectorAll('.terminal-simulation').forEach(terminal => {
+                terminal.style.display = 'none';
+            });
+            
+            // Reset progress bar
+            document.getElementById('progressFill').style.width = '0%';
+            
+            // Hide score
+            document.getElementById('scoreContainer').style.display = 'none';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize progress bar
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = '0%';
+        });
+    </script>
+</body>
+</html> 

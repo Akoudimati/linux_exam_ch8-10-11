@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Study Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            border-left: 5px solid #3498db;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.3em;
+            margin: 20px 0 10px 0;
+        }
+
+        .command-box {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .example {
+            background: #e8f5e8;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .important {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .tip {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #3498db;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        .nav-menu {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .nav-menu h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            columns: 2;
+        }
+
+        .nav-menu li {
+            margin: 5px 0;
+        }
+
+        .nav-menu a {
+            color: #3498db;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav-menu a:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        .quick-ref {
+            background: #f8f9fa;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .quick-ref h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="background: #2c3e50; color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
+            <a href="index.html" style="color: white; text-decoration: none; font-weight: bold;">🏠 Back to Home</a>
+        </div>
+        <div class="header">
+            <h1>🐧 Linux Study Guide</h1>
+            <p>Complete Reference for Your Linux Exam</p>
+        </div>
+
+        <div class="content">
+            <div class="nav-menu">
+                <h3>📚 Study Topics</h3>
+                <ul>
+                    <li><a href="#globbing">Globbing (Wildcards)</a></li>
+                    <li><a href="#file-ops">File Operations</a></li>
+                    <li><a href="#text-processing">Text Processing</a></li>
+                    <li><a href="#redirection">I/O Redirection</a></li>
+                    <li><a href="#grep">Grep & Search</a></li>
+                    <li><a href="#vi-editor">Vi Editor</a></li>
+                    <li><a href="#scripting">Shell Scripting</a></li>
+                    <li><a href="#find">Find Command</a></li>
+                </ul>
+            </div>
+
+            <div class="section" id="globbing">
+                <h2>🔍 Globbing (Wildcards)</h2>
+                <p>Glob characters are shell features that allow you to match filenames using patterns.</p>
+                
+                <h3>Basic Glob Characters</h3>
+                <table>
+                    <tr>
+                        <th>Character</th>
+                        <th>Matches</th>
+                        <th>Example</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>*</td>
+                        <td>Zero or more characters</td>
+                        <td>D*</td>
+                        <td>All files starting with D</td>
+                    </tr>
+                    <tr>
+                        <td>?</td>
+                        <td>Exactly one character</td>
+                        <td>??????</td>
+                        <td>Files with exactly 6 characters</td>
+                    </tr>
+                    <tr>
+                        <td>[abc]</td>
+                        <td>Any one of the characters</td>
+                        <td>[DP]*</td>
+                        <td>Files starting with D or P</td>
+                    </tr>
+                    <tr>
+                        <td>[!abc]</td>
+                        <td>Any character except these</td>
+                        <td>[!DP]*</td>
+                        <td>Files NOT starting with D or P</td>
+                    </tr>
+                    <tr>
+                        <td>[a-z]</td>
+                        <td>Range of characters</td>
+                        <td>[D-P]*</td>
+                        <td>Files starting with D through P</td>
+                    </tr>
+                </table>
+
+                <div class="example">
+                    <h4>Examples:</h4>
+                    <div class="command-box">echo *</div>
+                    <p>Shows all files in current directory</p>
+                    
+                    <div class="command-box">echo D*</div>
+                    <p>Shows files starting with D</p>
+                    
+                    <div class="command-box">echo *s</div>
+                    <p>Shows files ending with s</p>
+                    
+                    <div class="command-box">echo D*n*s</div>
+                    <p>Shows files starting with D, containing n, and ending with s</p>
+                </div>
+            </div>
+
+            <div class="section" id="file-ops">
+                <h2>📁 File Operations</h2>
+                
+                <h3>Copying Files</h3>
+                <table>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>cp source dest</td>
+                        <td>Basic copy</td>
+                        <td>cp file1.txt file2.txt</td>
+                    </tr>
+                    <tr>
+                        <td>cp -p source dest</td>
+                        <td>Preserve attributes</td>
+                        <td>cp -p /etc/hosts hosts</td>
+                    </tr>
+                    <tr>
+                        <td>cp -v source dest</td>
+                        <td>Verbose mode</td>
+                        <td>cp -v file1.txt file2.txt</td>
+                    </tr>
+                    <tr>
+                        <td>cp -R source dest</td>
+                        <td>Recursive (directories)</td>
+                        <td>cp -R /etc/udev Myetc</td>
+                    </tr>
+                </table>
+
+                <h3>Moving and Renaming</h3>
+                <div class="command-box">mv source destination</div>
+                <p>The mv command both moves and renames files.</p>
+                
+                <div class="example">
+                    <h4>Examples:</h4>
+                    <div class="command-box">mv oldname newname</div>
+                    <p>Rename a file</p>
+                    
+                    <div class="command-box">mv file.txt /home/user/</div>
+                    <p>Move file to another directory</p>
+                </div>
+
+                <h3>Deleting Files and Directories</h3>
+                <table>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                        <th>Use Case</th>
+                    </tr>
+                    <tr>
+                        <td>rm filename</td>
+                        <td>Delete file</td>
+                        <td>Remove single file</td>
+                    </tr>
+                    <tr>
+                        <td>rm -r directory</td>
+                        <td>Delete directory recursively</td>
+                        <td>Remove directory and contents</td>
+                    </tr>
+                    <tr>
+                        <td>rmdir directory</td>
+                        <td>Delete empty directory</td>
+                        <td>Remove empty directory only</td>
+                    </tr>
+                </table>
+
+                <div class="important">
+                    <strong>Important:</strong> The period (.) represents the current directory, and the tilde (~) represents the home directory.
+                </div>
+            </div>
+
+            <div class="section" id="text-processing">
+                <h2>📝 Text Processing</h2>
+                
+                <h3>Viewing Files</h3>
+                <table>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                        <th>Usage</th>
+                    </tr>
+                    <tr>
+                        <td>cat filename</td>
+                        <td>Display entire file</td>
+                        <td>Small files</td>
+                    </tr>
+                    <tr>
+                        <td>more filename</td>
+                        <td>Page through file</td>
+                        <td>Large files (forward only)</td>
+                    </tr>
+                    <tr>
+                        <td>less filename</td>
+                        <td>Page through file</td>
+                        <td>Large files (forward/backward)</td>
+                    </tr>
+                    <tr>
+                        <td>head filename</td>
+                        <td>First 10 lines</td>
+                        <td>Beginning of file</td>
+                    </tr>
+                    <tr>
+                        <td>tail filename</td>
+                        <td>Last 10 lines</td>
+                        <td>End of file</td>
+                    </tr>
+                </table>
+
+                <div class="example">
+                    <h4>Examples:</h4>
+                    <div class="command-box">head -5 /etc/passwd</div>
+                    <p>Show first 5 lines</p>
+                    
+                    <div class="command-box">tail -3 /var/log/messages</div>
+                    <p>Show last 3 lines</p>
+                    
+                    <div class="command-box">head -n -20 /etc/passwd</div>
+                    <p>Show all but last 20 lines</p>
+                </div>
+
+                <h3>Navigation in less/more</h3>
+                <table>
+                    <tr>
+                        <th>Key</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>Space</td>
+                        <td>Next page</td>
+                    </tr>
+                    <tr>
+                        <td>b</td>
+                        <td>Previous page</td>
+                    </tr>
+                    <tr>
+                        <td>/pattern</td>
+                        <td>Search forward</td>
+                    </tr>
+                    <tr>
+                        <td>n</td>
+                        <td>Next match</td>
+                    </tr>
+                    <tr>
+                        <td>N</td>
+                        <td>Previous match</td>
+                    </tr>
+                    <tr>
+                        <td>q</td>
+                        <td>Quit</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section" id="redirection">
+                <h2>🔄 I/O Redirection</h2>
+                
+                <h3>Standard Streams</h3>
+                <ul>
+                    <li><strong>stdin (0):</strong> Standard input (keyboard)</li>
+                    <li><strong>stdout (1):</strong> Standard output (screen)</li>
+                    <li><strong>stderr (2):</strong> Standard error (screen)</li>
+                </ul>
+
+                <h3>Redirection Operators</h3>
+                <table>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>></td>
+                        <td>Redirect output (overwrite)</td>
+                        <td>echo "Hello" > file.txt</td>
+                    </tr>
+                    <tr>
+                        <td>>></td>
+                        <td>Redirect output (append)</td>
+                        <td>echo "World" >> file.txt</td>
+                    </tr>
+                    <tr>
+                        <td><</td>
+                        <td>Redirect input</td>
+                        <td>command < input.txt</td>
+                    </tr>
+                    <tr>
+                        <td>|</td>
+                        <td>Pipe (send output to next command)</td>
+                        <td>ls | grep txt</td>
+                    </tr>
+                </table>
+
+                <div class="example">
+                    <h4>Examples:</h4>
+                    <div class="command-box">echo "Hello World" > message.txt</div>
+                    <p>Create file with content</p>
+                    
+                    <div class="command-box">echo "Second line" >> message.txt</div>
+                    <p>Append to file</p>
+                    
+                    <div class="command-box">ls /etc | tail -5</div>
+                    <p>Show last 5 files in /etc</p>
+                </div>
+
+                <div class="important">
+                    <strong>Warning:</strong> Using > overwrites existing files (called "clobbering"). Use >> to append instead.
+                </div>
+            </div>
+
+            <div class="section" id="grep">
+                <h2>🔍 Grep & Search</h2>
+                
+                <h3>Basic Grep Usage</h3>
+                <div class="command-box">grep pattern filename</div>
+                <p>Search for pattern in file and display matching lines.</p>
+
+                <h3>Regular Expression Characters</h3>
+                <table>
+                    <tr>
+                        <th>Character</th>
+                        <th>Meaning</th>
+                        <th>Example</th>
+                        <th>Matches</th>
+                    </tr>
+                    <tr>
+                        <td>^</td>
+                        <td>Beginning of line</td>
+                        <td>^root</td>
+                        <td>Lines starting with "root"</td>
+                    </tr>
+                    <tr>
+                        <td>$</td>
+                        <td>End of line</td>
+                        <td>bash$</td>
+                        <td>Lines ending with "bash"</td>
+                    </tr>
+                    <tr>
+                        <td>.</td>
+                        <td>Any single character</td>
+                        <td>r..t</td>
+                        <td>"root", "rout", "reat", etc.</td>
+                    </tr>
+                    <tr>
+                        <td>*</td>
+                        <td>Zero or more of previous</td>
+                        <td>ro*t</td>
+                        <td>"rt", "rot", "root", "rooot"</td>
+                    </tr>
+                </table>
+
+                <div class="example">
+                    <h4>Examples:</h4>
+                    <div class="command-box">grep root /etc/passwd</div>
+                    <p>Find all lines containing "root"</p>
+                    
+                    <div class="command-box">grep '^root' /etc/passwd</div>
+                    <p>Find lines starting with "root"</p>
+                    
+                    <div class="command-box">grep 'bash$' /etc/passwd</div>
+                    <p>Find lines ending with "bash"</p>
+                    
+                    <div class="command-box">cat /etc/passwd | grep sshd</div>
+                    <p>Pipe output to grep</p>
+                </div>
+
+                <div class="tip">
+                    <strong>Tip:</strong> Use single quotes around patterns to prevent shell interpretation. Grep is "greedy" - it matches all instances of the pattern.
+                </div>
+            </div>
+
+            <div class="section" id="vi-editor">
+                <h2>✏️ Vi Editor</h2>
+                
+                <h3>Vi Modes</h3>
+                <ul>
+                    <li><strong>Command Mode:</strong> Default mode for navigation and commands</li>
+                    <li><strong>Insert Mode:</strong> For typing text</li>
+                    <li><strong>Ex Mode:</strong> For saving, quitting, and advanced commands</li>
+                </ul>
+
+                <h3>Entering Insert Mode</h3>
+                <table>
+                    <tr>
+                        <th>Key</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>i</td>
+                        <td>Insert before cursor</td>
+                    </tr>
+                    <tr>
+                        <td>a</td>
+                        <td>Insert after cursor</td>
+                    </tr>
+                    <tr>
+                        <td>o</td>
+                        <td>Open new line below</td>
+                    </tr>
+                    <tr>
+                        <td>O</td>
+                        <td>Open new line above</td>
+                    </tr>
+                </table>
+
+                <h3>Navigation (Command Mode)</h3>
+                <table>
+                    <tr>
+                        <th>Key</th>
+                        <th>Movement</th>
+                    </tr>
+                    <tr>
+                        <td>h, j, k, l</td>
+                        <td>Left, down, up, right</td>
+                    </tr>
+                    <tr>
+                        <td>w</td>
+                        <td>Next word</td>
+                    </tr>
+                    <tr>
+                        <td>b</td>
+                        <td>Previous word</td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>Beginning of line</td>
+                    </tr>
+                    <tr>
+                        <td>$</td>
+                        <td>End of line</td>
+                    </tr>
+                    <tr>
+                        <td>G</td>
+                        <td>End of file</td>
+                    </tr>
+                    <tr>
+                        <td>1G</td>
+                        <td>Beginning of file</td>
+                    </tr>
+                </table>
+
+                <h3>Editing Commands</h3>
+                <table>
+                    <tr>
+                        <th>Command</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>x</td>
+                        <td>Delete character</td>
+                    </tr>
+                    <tr>
+                        <td>dd</td>
+                        <td>Delete line</td>
+                    </tr>
+                    <tr>
+                        <td>dw</td>
+                        <td>Delete word</td>
+                    </tr>
+                    <tr>
+                        <td>yy</td>
+                        <td>Copy line</td>
+                    </tr>
+                    <tr>
+                        <td>yw</td>
+                        <td>Copy word</td>
+                    </tr>
+                    <tr>
+                        <td>p</td>
+                        <td>Paste after</td>
+                    </tr>
+                    <tr>
+                        <td>P</td>
+                        <td>Paste before</td>
+                    </tr>
+                    <tr>
+                        <td>u</td>
+                        <td>Undo</td>
+                    </tr>
+                    <tr>
+                        <td>J</td>
+                        <td>Join lines</td>
+                    </tr>
+                    <tr>
+                        <td>~</td>
+                        <td>Toggle case</td>
+                    </tr>
+                </table>
+
+                <h3>Search and Replace</h3>
+                <table>
+                    <tr>
+                        <th>Command</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>/pattern</td>
+                        <td>Search forward</td>
+                    </tr>
+                    <tr>
+                        <td>?pattern</td>
+                        <td>Search backward</td>
+                    </tr>
+                    <tr>
+                        <td>n</td>
+                        <td>Next match</td>
+                    </tr>
+                    <tr>
+                        <td>N</td>
+                        <td>Previous match</td>
+                    </tr>
+                    <tr>
+                        <td>:%s/old/new/g</td>
+                        <td>Replace all occurrences</td>
+                    </tr>
+                </table>
+
+                <h3>Saving and Quitting</h3>
+                <table>
+                    <tr>
+                        <th>Command</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>:w</td>
+                        <td>Save file</td>
+                    </tr>
+                    <tr>
+                        <td>:q</td>
+                        <td>Quit</td>
+                    </tr>
+                    <tr>
+                        <td>:wq</td>
+                        <td>Save and quit</td>
+                    </tr>
+                    <tr>
+                        <td>:q!</td>
+                        <td>Quit without saving</td>
+                    </tr>
+                    <tr>
+                        <td>:x</td>
+                        <td>Save and quit</td>
+                    </tr>
+                </table>
+
+                <div class="important">
+                    <strong>Remember:</strong> Press Esc to exit insert mode and return to command mode.
+                </div>
+            </div>
+
+            <div class="section" id="scripting">
+                <h2>🖥️ Shell Scripting</h2>
+                
+                <h3>Basic Script Structure</h3>
+                <div class="command-box">#!/bin/bash
+# This is a comment
+echo "Hello, World!"</div>
+
+                <h3>Key Elements</h3>
+                <ul>
+                    <li><strong>Shebang:</strong> #!/bin/bash (first line)</li>
+                    <li><strong>Comments:</strong> Lines starting with #</li>
+                    <li><strong>Commands:</strong> Regular Linux commands</li>
+                </ul>
+
+                <h3>Variables</h3>
+                <div class="command-box">name="John"        # Assign variable
+echo $name          # Use variable
+echo ${name}        # Alternative syntax</div>
+
+                <h3>User Input</h3>
+                <div class="command-box">read -p "Enter your name: " username
+echo "Hello, $username!"</div>
+
+                <h3>Making Scripts Executable</h3>
+                <div class="command-box">chmod +x script.sh     # Make executable
+./script.sh             # Run script</div>
+
+                <div class="example">
+                    <h4>Complete Example Script:</h4>
+                    <div class="command-box">#!/bin/bash
+# Simple greeting script
+read -p "What is your name? " name
+echo "Hello, $name!"
+echo "Welcome to Linux!"</div>
+                </div>
+
+                <h3>Aliases</h3>
+                <p>Create shortcuts for commands:</p>
+                <div class="command-box">alias ll='ls -la'
+alias ..='cd ..'
+alias quit='exit'</div>
+
+                <div class="tip">
+                    <strong>Tip:</strong> Add aliases to ~/.bashrc file to make them permanent.
+                </div>
+            </div>
+
+            <div class="section" id="find">
+                <h2>🔎 Find Command</h2>
+                
+                <h3>Basic Syntax</h3>
+                <div class="command-box">find [path] [options] [expression]</div>
+
+                <h3>Common Options</h3>
+                <table>
+                    <tr>
+                        <th>Option</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>-name</td>
+                        <td>Find by filename</td>
+                        <td>find /home -name "*.txt"</td>
+                    </tr>
+                    <tr>
+                        <td>-type f</td>
+                        <td>Find files only</td>
+                        <td>find /etc -type f</td>
+                    </tr>
+                    <tr>
+                        <td>-type d</td>
+                        <td>Find directories only</td>
+                        <td>find /var -type d</td>
+                    </tr>
+                    <tr>
+                        <td>-size</td>
+                        <td>Find by size</td>
+                        <td>find /home -size +100M</td>
+                    </tr>
+                    <tr>
+                        <td>-delete</td>
+                        <td>Delete found files</td>
+                        <td>find /tmp -name "*.tmp" -delete</td>
+                    </tr>
+                </table>
+
+                <div class="example">
+                    <h4>Examples:</h4>
+                    <div class="command-box">find /home/student -name "test"</div>
+                    <p>Find files named "test"</p>
+                    
+                    <div class="command-box">find /home/student -name "test" -delete</div>
+                    <p>Find and delete files named "test"</p>
+                    
+                    <div class="command-box">find . -name "*.log" -type f</div>
+                    <p>Find all .log files in current directory</p>
+                </div>
+
+                <div class="important">
+                    <strong>Important:</strong> Find requires you to specify the starting path. Use . for current directory, / for entire system.
+                </div>
+            </div>
+
+            <div class="quick-ref">
+                <h4>🚀 Quick Reference - Most Important Commands</h4>
+                <table>
+                    <tr>
+                        <th>Task</th>
+                        <th>Command</th>
+                    </tr>
+                    <tr>
+                        <td>List files starting with 'a'</td>
+                        <td>ls a*</td>
+                    </tr>
+                    <tr>
+                        <td>Copy with attributes</td>
+                        <td>cp -p source dest</td>
+                    </tr>
+                    <tr>
+                        <td>Move/rename file</td>
+                        <td>mv old new</td>
+                    </tr>
+                    <tr>
+                        <td>Delete directory</td>
+                        <td>rm -r dirname</td>
+                    </tr>
+                    <tr>
+                        <td>Search in file</td>
+                        <td>grep pattern filename</td>
+                    </tr>
+                    <tr>
+                        <td>Edit file</td>
+                        <td>vi filename</td>
+                    </tr>
+                    <tr>
+                        <td>Make script executable</td>
+                        <td>chmod +x script.sh</td>
+                    </tr>
+                    <tr>
+                        <td>Find files</td>
+                        <td>find /path -name "filename"</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="tip">
+                <h4>💡 Exam Tips</h4>
+                <ul>
+                    <li>Practice typing commands - muscle memory is important</li>
+                    <li>Remember that Linux is case-sensitive</li>
+                    <li>Use tab completion to avoid typos</li>
+                    <li>Read error messages carefully - they often tell you what's wrong</li>
+                    <li>Practice with the vi editor - it's commonly tested</li>
+                    <li>Know the difference between > and >> for redirection</li>
+                    <li>Understand file permissions and the chmod command</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

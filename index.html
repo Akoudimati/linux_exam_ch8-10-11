@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Exam Study Hub - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .nav-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .nav-card h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .nav-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .nav-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .features {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .features h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+        .feature h3 {
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐧 Linux Exam Study Hub</h1>
+            <p>Your comprehensive resource for mastering Linux system administration concepts and preparing for your exam</p>
+        </div>
+
+        <div class="highlight">
+            🎯 Master Linux Commands, File Operations, Text Processing, and More!
+        </div>
+
+        <div class="nav-grid">
+            <a href="linux_exam_questions.html" class="nav-card">
+                <span class="icon">❓</span>
+                <h2>Essential Questions & Commands</h2>
+                <p>Top 14 most important Linux exam questions and commands you need to know. Perfect for quick review and last-minute studying.</p>
+                <span class="btn">Start Learning</span>
+            </a>
+
+            <a href="linux_exam.html" class="nav-card">
+                <span class="icon">📝</span>
+                <h2>Interactive Practice Exam</h2>
+                <p>Test your knowledge with our interactive Linux exam simulator. Practice with real exam-style questions and get instant feedback.</p>
+                <span class="btn">Take Practice Exam</span>
+            </a>
+
+            <a href="linux_study_guide.html" class="nav-card">
+                <span class="icon">📚</span>
+                <h2>Complete Study Guide</h2>
+                <p>Comprehensive reference covering all major topics: globbing, file operations, text processing, redirection, grep, vi editor, and more.</p>
+                <span class="btn">Study Guide</span>
+            </a>
+
+            <a href="linux_written_exam.html" class="nav-card">
+                <span class="icon">✍️</span>
+                <h2>Written Exam Questions</h2>
+                <p>Practice written exam questions with detailed answers. Perfect for understanding concepts and improving your problem-solving skills.</p>
+                <span class="btn">Practice Questions</span>
+            </a>
+        </div>
+
+        <div class="features">
+            <h2>🎯 What You'll Learn</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>🔍 Globbing & Wildcards</h3>
+                    <p>Master *, ?, and [] patterns for efficient file matching and manipulation</p>
+                </div>
+                <div class="feature">
+                    <h3>📁 File Operations</h3>
+                    <p>Learn cp, mv, rm commands and understand file permissions</p>
+                </div>
+                <div class="feature">
+                    <h3>📝 Text Processing</h3>
+                    <p>Master grep, sed, awk, and other text manipulation tools</p>
+                </div>
+                <div class="feature">
+                    <h3>🔄 I/O Redirection</h3>
+                    <p>Understand >, >>, |, and file descriptor manipulation</p>
+                </div>
+                <div class="feature">
+                    <h3>✏️ Vi Editor</h3>
+                    <p>Navigate and edit files efficiently with vi/vim commands</p>
+                </div>
+                <div class="feature">
+                    <h3>📜 Shell Scripting</h3>
+                    <p>Create executable scripts and understand basic shell programming</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Linux Exam Study Hub</strong></p>
+            <p>Comprehensive study materials for Linux system administration certification</p>
+            <p>Topics covered: Chapters 8, 9, 10, and 11</p>
+            <p>📧 <a href="mailto:study@linuxexam.com">Contact for Support</a> | 📖 <a href="#top">Back to Top</a></p>
+        </div>
+    </div>
+</body>
+</html> 

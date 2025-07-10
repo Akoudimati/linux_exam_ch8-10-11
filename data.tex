@@ -1,0 +1,2788 @@
+8.1 Introduction
+This is Lab 8: Managing Files and Directories. By performing this lab, students will learn how
+to navigate and manage files and directories.
+
+In this lab, you will perform the following tasks:
+
+● Understand how to use globbing
+● Creating, moving and deleting files and directories
+
+8.2 Globbing
+The use of glob characters in Linux is similar to what many operating systems refer to as
+"wildcard" characters. Using glob characters, you match filenames using patterns.
+
+Glob characters are a shell feature, not something that is particular to any specific command. As
+a result, you can use glob characters with any Linux command.
+
+When glob characters are used, the shell will "expand" the entire pattern to match all files in the
+specified directory that match the pattern.
+
+For demonstration purposes, we will use the echo command to display this expansion process.
+
+8.2.1 Step 1
+Use the following echo command to display all filenames in the current directory that match the
+glob pattern *:
+echo *
+
+Your output should be similar to the following:
+
+The asterisk * matches "zero or more" characters in a file name. In the example above, this
+results in matching all filenames in the current directory.
+
+The echo command, in turn, displays the filenames that were matched.
+
+8.2.2 Step 2
+The following commands will display all the files in the current directory that start with the letter D,
+and the letter P:
+
+echo D*
+
+echo P*
+
+Your output should be similar to the following:
+
+
+
+Think of the first example, D*, as "match all filenames in the current directory that begin with a
+capital d character and have zero or more of any other character after the D".
+
+8.2.3 Step 3
+The asterisk * can be used anywhere in the string. The following command will display all the
+files in your current directory that end in the letter s:
+
+echo *s
+
+Your output should be similar to the following:
+
+8.2.4 Step 4
+Notice that the asterisk can also appear multiple times or in the middle of several characters:
+echo D*n*s
+
+Your output should be similar to the following:
+
+The next glob metacharacter that we will examine is the question mark ?. The question mark
+matches exactly one character. This single character can be any possible character.
+
+Like the asterisk, it can be used anywhere in a string and can appear multiple times.
+
+8.2.5 Step 5
+
+
+
+Since each question mark matches one unknown character, typing six of them will match
+six-character filenames. Type the following to display the filenames that are exactly six
+characters long:
+echo ??????
+
+Your output should be similar to the following:
+
+Important
+Each ? character must match exactly one character in a filename-no more and no less than one
+character.
+
+8.2.6 Step 6
+Using the question mark with other characters will limit the matches. Type the following to display
+the file names that start with the letter D and are exactly nine characters long:
+
+echo D????????
+
+Your output should be similar to the following:
+
+8.2.7 Step 7
+Wildcards or glob characters can be combined together. The following command will display file
+names that are at least six characters long and end in the letter s.
+
+echo ?????*s
+
+Your output should be similar to the following:
+
+Think of the pattern ?????*s to mean "match filenames that begin with any five characters, then
+have zero or more of any characters and then end with an s character".
+
+8.2.8 Step 8
+
+
+
+The next glob is similar to the question mark glob to specify one character.
+
+This glob uses a pair of square brackets [ ] to specify which one character will be allowed. The
+allowed characters can be specified as a range, a list, or by what is known as a character class.
+
+The allowed characters can also be negated with an exclamation point !.
+
+In the first example, the first character of the file name can be either a D or a P. In the second
+example, the first character can be any character except a D or P:
+
+echo [DP]*
+
+echo [!DP]*
+
+Your output should be similar to the following:
+
+8.2.9 Step 9
+In these next examples, a range of characters will be specified. In the first example, the first
+character of the file name can be any character starting at D and ending at P. In the second
+example, this range of characters is negated, meaning any single character will match as long as
+it is not between the letters D and P:
+
+echo [D-P]*
+
+echo [!D-P]*
+
+Your output should be similar to the following:
+
+You may be asking yourself "who decides what letters come between D and P"? In this case, the
+answer is fairly obvious (E, F, G, H, I, J, K, L, M, N and O), but what if the range was [1-A]?
+
+The ASCII text table is used to determine the range of characters. You can view this table by
+searching for it on the Internet or typing the following command: ascii
+
+So, what characters does the glob [1-A] match? According to the ASCII text table: 1, 2, 3, 4, 5,
+6, 7, 8, 9, :, ;, <, =, >, ?, @ and A.
+
+
+
+8.3 Copying, Moving and Renaming Files
+and Directories
+In this task, you will copy, move, and remove files and directories.
+
+8.3.1 Step 1
+Make a copy of the /etc/hosts file and place it in the current directory. Then, list the contents
+of the current directory before and after the copy:
+ls
+
+cp /etc/hosts hosts
+
+ls
+
+Your output should be similar to the following:
+
+Notice how the second ls command displays a copy of the hosts file.
+
+8.3.2 Step 2
+Next, you will remove the file, then copy it again, but have the system tell you what is being done.
+This can be achieved using the -v or --verbose option. Enter the following commands:
+
+rm hosts
+
+ls
+
+cp –v /etc/hosts hosts
+
+ls
+
+Note that the rm command is used to delete a file. More information on this command will be
+provided later in this lab.
+
+Your output should be similar to the following:
+
+
+
+Note that the -v switch displays the source and target when the cp command is executed:
+
+Source
+`/etc/hosts'-> `hosts'
+
+Target
+`/etc/hosts'-> `hosts'
+
+8.3.3 Step 3
+Enter the following commands to copy the /etc/hosts file, using the period . character to
+indicate the current directory as the target:
+rm hosts
+
+ls
+
+cp –v /etc/hosts .
+
+ls
+
+Your output should be similar to the following:
+
+The period . character is a handy way to say "the current directory". It can be used with all Linux
+commands, not just the cp command.
+
+8.3.4 Step 4
+Enter the following commands to copy from the source directory and preserve file attributes by
+using the -p option:
+
+rm hosts
+ls
+
+
+
+cd /etc
+ls -l hosts
+cp –p hosts /home/sysadmin
+cd
+ls –l hosts
+
+Your output should be similar to the following:
+
+Notice that the date and permission modes were preserved. Note that the timestamp in the
+output above is the same for both the original and the copy (Jan 22 15:18) in the example
+provided above. Your output may vary.
+
+8.3.5 Step 5
+Type the following commands to copy using a different target name:
+rm hosts
+cp -p /etc/hosts ~
+cp hosts newname
+ls –l hosts newname
+rm hosts newname
+
+The first copy with the -p option preserved the original timestamp. Recall that the tilde ~
+represents your home directory (/home/sysadmin).
+
+
+
+The second copy specified a different filename (newname) as the target. Because it was
+issued without the -p option, the system used the current date and time for the target; thus, it
+did not preserve the original timestamp found in the source file /etc/hosts.
+
+Finally, note that you can remove more than one file at a time as shown in the last rm
+command.
+
+8.3.6 Step 6
+To copy all files in a directory, use the -R option. For this task, we will copy the /etc/udev
+directory into a new directory and display the contents that were copied there. Naturally, the
+directory must be created before files can be added to it. In this example we will use the default
+settings for mkdir to create the “Myetc” directory. Options are available for the mkdir command
+to set security, permissions and other attributes of a new directory. Once the directory has been
+copied, the ls command is used to list the contents of the directory with both the long and
+recursive options.
+
+mkdir Myetc
+
+cp –R /etc/udev Myetc
+
+ls –l Myetc
+
+ls –lR Myetc
+
+sysadmin@localhost:~$ mkdir Myetc
+
+sysadmin@localhost:~$ cp -R /etc/udev Myetc
+
+sysadmin@localhost:~$ ls -l Myetc
+
+total 0
+
+drwxr-xr-x 1 sysadmin sysadmin 32 Jan 22 16:35 udev
+
+sysadmin@localhost:~$ ls -lR Myetc
+
+Myetc:
+
+total 0
+
+drwxr-xr-x 1 sysadmin sysadmin 32 Jan 22 16:35 udev
+
+Myetc/udev:
+
+total 4
+
+drwxr-xr-x 1 sysadmin sysadmin 56 Jan 22 16:35 rules.d
+
+-rw-r--r-- 1 sysadmin sysadmin 218 Jan 22 16:35 udev.conf
+
+Myetc/udev/rules.d:
+
+total 8
+
+-rw-r--r-- 1 sysadmin sysadmin 306 Jan 22 16:35 70-persistent-cd.rules
+
+
+
+-rw-r--r-- 1 sysadmin sysadmin 1157 Jan 22 16:35 README
+
+sysadmin@localhost:~$
+
+8.3.7 Step 7
+To remove a directory, use the -r option to the rm command:
+
+ls
+
+rm -r Myetc
+
+ls
+
+Your output should be similar to the following:
+sysadmin@localhost:~$ ls
+
+Desktop Downloads Myetc Public Videos
+
+Documents Music Pictures Templates
+
+sysadmin@localhost:~$ rm -r Myetc
+
+sysadmin@localhost:~$ ls
+
+Desktop Documents Downloads Music Pictures Public Templates Videos
+
+sysadmin@localhost:~$
+
+Note that the rmdir command can also be used to delete directories, but only if the directory is empty
+(if it contains no files).
+
+Also note the -r option. This option removes directories and their contents recursively.
+
+8.3.8 Step 8
+Moving a file is analogous to a "cut and paste". The file is “cut” (removed) from the original
+location and “pasted” to the specified destination. Move a file in the local directory by executing
+the following commands:
+touch premove
+
+ls
+
+mv premove postmove
+
+ls
+
+ rm postmove
+
+Linux Command Description
+
+
+
+touch premove Creates an empty file called premove
+
+mv premove postmove This command “cuts” the premove file and “pastes” it to a file call
+postmove
+
+rm postmove Removes postmove file
+
+Your output should be similar to the following:
+sysadmin@localhost:~$ touch premove
+
+sysadmin@localhost:~$ ls
+
+Desktop Downloads Pictures Templates premove
+
+Documents Music Public Videos
+
+sysadmin@localhost:~$ mv premove postmove
+
+sysadmin@localhost:~$ ls
+
+Desktop Downloads Pictures Templates postmove
+
+Documents Music Public Videos
+
+sysadmin@localhost:~$
+
+
+
+Introduction Chapter 8
+
+In this chapter, you will perform the following tasks:
+
+● Understand how to use globbing ("wildcard" characters. Using glob characters, you match filenames 
+using patterns.)
+
+● Creating, moving and deleting files and directories
+
+
+
+Globbing
+Glob characters are often referred to as wild cards. These are symbol characters that have special meaning to the shell.
+
+
+
+Question Mark ? Character
+The question mark ? character represents any single character. Each question mark character matches exactly one 
+character, no more and no less.
+
+
+
+Bracket [ ] Characters
+The bracket [] characters are used to match a single character by representing a range of characters that are possible 
+match characters. For example, the /etc/[gu]* pattern matches any file that begins with either a g or u character and 
+contains zero or more additional characters:
+
+
+
+Listing With Globs
+The ls command is normally used to list files in a directory;
+
+
+
+Copying, Moving and Renaming 
+Files and Directories
+
+
+
+Verbose Mode
+
+The -v option causes the cp command to produce output if successful. The -v option 
+stands for verbose:
+
+
+
+Avoid Overwriting Data
+
+The cp command can be destructive to existing data if the destination file already exists. In the case where the destination file 
+exists, the cp command overwrites the existing file's contents with the contents of the source file.
+
+
+
+Copying Directories
+
+However, the recursive -r option allows the cp command to copy both files and directories.
+
+cp -r source_directory destination_directory
+
+
+
+Moving Files
+
+To move a file, use the mv command.The syntax for the mv command is much like the cp command:
+
+mv source destination
+
+
+
+Renaming Files
+
+The mv command is not just used to move a file, but also to rename a file. If the destination for the mv command is a 
+directory, the file is moved to the directory specified. The name of the file only changes if a destination file name is also 
+specified.
+
+Commando rename bestaat niet!!!!!!!
+
+
+
+Creating Files
+
+To create an empty file, use the touch command as demonstrated below:
+
+
+
+Removing Files
+
+To delete a file, use the rm command::
+
+
+
+Removing Directories
+You can delete directories using the rm command. However, the default behavior (no options) of the rm command is to not 
+delete directories:
+
+To delete a directory with the rm command, use the -r recursive option:
+
+You can also delete a directory with the rmdir command, but only if the directory is empty.
+
+
+
+Important commands
+
+copy mv rm rmdir (directory moet wel leeg zijn)
+
+rm -r  (Werkt ook als directory niet leeg is)
+
+cp ls rm -rF /* (niet gebruiken, alles in de root wordt verwijderd)
+
+
+
+The End
+
+
+
+
+
+
+
+Chapter 11
+Vi editor
+
+
+
+Vi editor is een bestands teksteditor.
+
+Vi is een visuele editor en het is mogelijk is om met de cursor door het 
+te bewerken bestand te navigeren. (Vim = Vi IMproved)
+
+De Vi-editor heeft 2 verschillende modi. 
+De twee belangrijkste modi zijn de tekstmodus en de commando 
+modus.
+1) In de tekstmodus is het mogelijk om tekst in het document in te 
+
+voeren.
+
+Door op escape (ESC of CTRL C) te drukken schakelt de editor over 
+naar de commandomodus en Insert naar  de tekstmodus!
+
+2) In de commando modus kan je opdrachten invoeren.
+
+
+
+Waarvoor heb je Vi  nodig?
+
+
+
+Commando 's in Vi (regel 
+georiënteerde ed-modus)
+
+Commando ‘s
+
+vi = vi opstarten
+I of <ins> = Overschakelen van commando- naar tekst modus
+<Esc> = Overschakelen van tekst -naar commando modus
+:wq! = Afsluiten met opslaan
+:q! = Afsluiten zonder opslaan
+:w bestandsnaam = opslaan naar bestand
+dd = Regel tekst knippen
+yy = Regel tekst kopiëren
+p = plakken
+g = naar het begin van bestand gaan
+G  = Naar eind van bestanden gaan
+v = Blok markeren om te verwijderen
+/zoekwoord = Zoeken in de tekst
+n = Volgende Woord Zoeken
+
+
+
+Vi editor Opdracht 1
+Gebruik voor alle opdrachten de OpenSuSe virtuele machine
+
+Bestand openen en sluiten:
+
+● Open een nieuw bestand: vi website in /home/jenaam
+● Voeg tekst toe in de invoegmodus (bijvoorbeeld door op i te drukken).
+
+      <HTML> 
+
+<HEAD>
+
+<title>Checkbox Example</title> 
+
+</HEAD> 
+<BODY> 
+<input type=“checkbox”
+
+name=“Brasserskade”
+value=“Brasserskade”> Is dit Brasserskade?
+
+<input type=“checkbox”
+name=“Tinwerf”
+value=“Tinwerf”> Is dit Tinwerf?
+     
+
+   </BODY> 
+</HTML>      
+
+● Sla het bestand op: :w
+● Sluit het bestand: :q
+
+
+
+● Installeer de browser w3m in OpenSuSe met de commando yast -i w3m
+●
+
+● Open het bestand website met w3m (w3m website). Dit lukt niet!!!!!
+● Wijzig de naam website in website1.htm
+● Open  met w3m  website1.htm Nu lukt het wel!!!!!
+● Open het bestand website1.htm ook met Firefox
+
+
+
+Script starten
+Script= kleine programmaatjes om veel voorkomende taken 
+(bijvoorbeeld systeembeheer taken) te automatiseren.
+1. Standaard kan een script niet in jouw home-map starten
+2. Script begin met ./     (punt verwijs naar je home map)
+3. Script eindigt op .sh (shell) (Bijvoorbeeld ./voorbeeld.sh)
+4. Script wordt uitgevoerd als je de x-recht hebt.
+    Bijvoorbeeld: chmod +x opdracht.sh
+    5 Script herken je direct aan #!/bin/bash
+
+
+
+Opdracht 2a 
+● Typ vi opdracht2.sh en druk op Enter. (Als het bestand nog niet bestaat, wordt het aangemaakt.)
+
+Schakel naar de invoegmodus:
+
+Druk op i om naar de invoegmodus te gaan. Nu kun je tekst invoeren.
+Schrijf je script:
+
+Typ je shell-script. Bijvoorbeeld, om een eenvoudige "Hello, World!"-boodschap te printen, typ je:
+
+#!/bin/bash
+echo "Hello, World!"
+
+● De eerste regel (#!/bin/bash) vertelt het systeem welk programma gebruikt moet worden om het script uit te voeren.
+
+Sla het script op en sluit vi:
+
+○ Druk op Esc om naar de commandomodus te gaan.
+○ Typ :wq en druk op Enter om het bestand op te slaan en vi te verlaten. De :w slaat het bestand op en de q sluit vi.
+
+
+
+Opdracht 2b
+Het script uitvoerbaar maken:
+
+● Open een nieuwe terminal of gebruik de huidige.
+
+● Navigeer naar de directory waar je het script hebt opgeslagen.
+
+Voer de volgende opdracht uit om het script uitvoerbaar te maken:
+
+chmod +x opdracht.sh
+
+● Wees voorzichtig met code.
+
+● Voer het script uit:
+
+
+
+Opdracht 3
+
+● Typ vi opdracht3.sh en druk op Enter.
+● Maak de volgende script
+
+#!/bin/bash 
+# Vraag de gebruiker om zijn naam 
+read -p "Wat is je naam? " naam
+
+# Print een gepersonaliseerde boodschap 
+echo "Hallo, $naam!"
+
+
+
+Opdracht 4 Basisonderdelen
+
+● Maak met de VI editor bestand Opdracht 4 aan in /home/jenaam/Documents 
+● Om het bestand Opdracht4 aan te maken en tegelijk te openen in Vi geef je het volgende commando: vi Oefenbestand.
+● Vi is geopend in de commandomodus. Om de tekst te typen moet je naar de insertmodus:
+
+Typ i
+
+Controleer of linksonder in beeld ‘INSERT’ staat.
+
+Typ de volgende tekst over: 
+
+Waarom zijn pepernoten zo lekker?
+
+De echte pepernoten worden, net als taaitaai, in de basis gemaakt van roggemeel, anijs en honing. Daarnaast bevatten ze 
+een mengsel van specerijen zoals kardemom, kaneel, gember en korianderzaad. De smaak is te vergelijken met ontbijtkoek.
+
+● Navigeer door de tekst met de pijltjestoetsen, h, j, k, l.
+● Wis een karakter, een woord of een regel.
+● Voeg tekst toe op verschillende posities in een regel.
+● Zoek naar een specifieke tekst. (gebruik bijvoorbeeld in commando-modus /pepernoten).
+● Vervang alle woorden pepernoten door het woord kruidnoten.
+● Sla het bestand op en sluit Vi.
+
+
+
+Opdracht 5:  Alias aanmaken
+Log in als superuser
+Ga naar je home-map ( /root).
+Maak een bestand aan met de naam: vi .bashrc
+Typ op de eerste regel alias uit='shutdown -h now'
+Sluit Vi af.
+
+Typ: uit
+
+Reboot de computer en check met het commando alias of de sneltoets nog in de lijst staat.
+
+
+
+Opdracht 5:  Profile aanpassen
+
+
+
+Opdracht 6:  scripts maken
+
+Maak de volgende opdrachten:
+
+Lab 11: Basic Scripting    
+
+Basic Shell Scripting 11.3 t/m 11.4.6
+
+
+
+Einde
+
+
+10.1 Introduction
+This is Lab 10: Working with Text. By performing this lab, students will learn how to redirect text streams, use regular expressions and 
+use commands for filtering text files.
+
+In this lab, you will perform the following tasks:
+
+● Learn how to redirect and pipe standard input, output and error channels.
+● Use regular expressions to filter the output of commands or file content.
+● View large files or command output with programs for paging, and viewing selected portions.
+
+
+
+echo command
+Use the redirection symbol > along with the echo command to redirect the output from the normal output of stdout (to the 
+terminal) to a file. The cat command can be used to display file contents and will be used in this example to verify 
+redirected output to the file. Type the following:
+
+
+
+find command
+
+1. Find gebruik je als je specifiek iets wilt opzoeken; 
+2. Met find moet je specificeren vanaf welke plek gezocht moet 
+
+worden. Bijvoorbeeld: find /home/student;
+3. Je kan find een optie meegeven. Bijvoorbeeld:
+
+find /home/student -name "test" -delete;
+
+
+
+Example 1 find
+
+
+
+Example 2 find
+
+
+
+grep command
+
+1. Met grep kan je een woord of een deel van een zin in een bestand 
+zoeken;
+
+2. Zoek je een deel van een zin, dan “xxx” gebruiken;
+3. Grep wordt gebruikt als filter;
+4. Grep gebruik je in combinatie met cat;
+5. Bijvoorbeeld cat /home/student/messages | grep Network
+6. | is een doorsluis commando;
+7. Grep kan je dus niet gebruiken om bestanden of mappen te 
+
+zoeken.
+
+
+
+Example grep
+
+
+
+Questions
+
+
+10.1 Introduction
+This is Lab 10: Working with Text. By performing this lab, students will learn how to redirect text
+streams, use regular expressions and use commands for filtering text files.
+
+In this lab, you will perform the following tasks:
+
+● Learn how to redirect and pipe standard input, output and error channels.
+● Use regular expressions to filter the output of commands or file content.
+● View large files or command output with programs for paging, and viewing selected
+
+portions.
+
+10.2 Command Line Pipes and Redirection
+Normally, when you execute a command, the output is displayed in the terminal window. This
+output (also called a channel) is called standard output, symbolized by the term stdout. The file
+descriptor number for this channel is 1.
+
+Standard error (stderr) occurs when an error appears during the execution of a command; it
+has a file descriptor of 2. Error messages are also sent to the terminal window by default.
+
+In this lab, you will use characters that redirect the output from standard output (stdout) and
+standard error (stderr) to a file or to another command instead of the terminal screen.
+
+Standard input, stdin, usually is provided by you to a command by typing on the keyboard; it
+has a file descriptor of 0. However, by redirecting standard input, files can also be used as
+stdin.
+
+10.2.1 Step 1
+Use the redirection symbol > along with the echo command to redirect the output from the
+normal output of stdout (to the terminal) to a file. The cat command can be used to display file
+contents and will be used in this example to verify redirected output to the file. Type the following:
+echo "Hello World"
+echo "Hello World" > mymessage
+cat mymessage
+
+Your output should be similar to the following:
+
+1
+
+
+
+The first command echoes the message (stdout) to the terminal.
+
+The second command redirects the output; instead of sending the output to the terminal,
+it is sent to a file called mymessage.
+
+The last command displays the contents of the mymessage file.
+
+10.2.2 Step 2
+When you use the > symbol to redirect stdout, the contents of the file are first destroyed. Type
+the following commands to see a demonstration:
+echo "Greetings" > mymessage
+cat mymessage
+
+Your output should be similar to the following:
+
+2
+
+
+
+Notice that using one redirection symbol overwrites an existing file. This is called "clobbering"
+a file.
+
+10.2.3 Step 3
+You can avoid clobbering a file by using >> instead of >. By using >> you append to a file.
+Execute the following commands to see a demonstration of this:
+cat mymessage
+echo "How are you?" >> mymessage
+cat mymessage
+
+Your output should be similar to the following:
+
+Notice that by using >> all existing data is preserved and the new data is appended at the end of the
+file.
+
+10.2.4 Step 4
+The find command is a good command to demonstrate how stderr works. This very flexible
+command allows searching with a host of options such as filename, size, date, type and
+permission.
+
+The find command will begin the search in the directory specified and recursively search all of
+the subdirectories. For example, to search for files beginning in your home directory containing
+the name bash:
+
+find ~ -name "bash"
+
+Your output should be similar to the following:
+
+Remember that ~ is used to represent your home directory.
+
+3
+
+
+
+Now, run the following command and observe the output:
+find /etc -name hosts
+
+Your output should be similar to the following:
+sysadmin@localhost:~$ find /etc -name hosts
+
+/etc/hosts
+
+find: '/etc/ssl/private': Permission denied
+
+sysadmin@localhost:~$
+
+Notice the error message indicating you do not have permission to access certain files/directories.
+This is because as a regular user, you don't have the right to "look inside" some directories. These
+types of error messages are sent to stderr, not stdout.
+
+The find command is beyond the scope of this course. The purpose of using the command is to
+demonstrate the difference between stdout and stderr.
+
+10.2.5 Step 5
+To redirect stderr (error messages) to a file, issue the following command:
+
+find /etc -name hosts 2> err.txt
+
+cat err.txt
+
+Your output should be similar to the following:
+sysadmin@localhost:~$ find /etc -name hosts 2> err.txt
+
+/etc/hosts
+
+sysadmin@localhost:~$ cat err.txt
+
+find: `/etc/ssl/private': Permission denied
+
+sysadmin@localhost:~$
+
+Recall that the file descriptor for stderr is the number 2, so it is used along with the > symbol to
+redirect the stderr output to a file called err.txt. Note that 1> is the same as >.
+
+4
+
+
+
+The previous example demonstrates why knowing redirection is important. If you want to "ignore" the
+errors that the find command displays, you can redirect those messages into a file and look at them
+later, making it easier to focus on the rest of the output of the command.
+
+10.2.6 Step 6
+You can also redirect stdout and stderr into two separate files.
+
+find /etc -name hosts > std.out 2> std.err
+
+cat std.err
+
+cat std.out
+
+Your output should be similar to the following:
+sysadmin@localhost:~$ find /etc -name hosts > std.out 2> std.err
+
+sysadmin@localhost:~$ cat std.err
+
+find: `/etc/ssl/private': Permission denied
+
+sysadmin@localhost:~$ cat std.out
+
+/etc/hosts
+
+Note that a space is permitted but not required after the > redirection symbol.
+
+10.2.7 Step 7
+To redirect both standard output (stdout) and standard error (stderr) to one file, first redirect
+stdout to a file and then redirect stderr to that same file by using the notation 2>&1.
+
+find /etc -name hosts > find.out 2>&1
+
+cat find.out
+
+Your output should be similar to the following:
+sysadmin@localhost:~$ find /etc -name hosts > find.out 2>&1
+
+sysadmin@localhost:~$ cat find.out
+
+/etc/hosts
+
+find: '/etc/ssl/private': Permission denied
+
+sysadmin@localhost:~$
+
+The 2>&1 part of the command means "send the stderr (channel 2) to the same place where
+stdout (channel 1) is going".
+
+5
+
+
+
+10.2.8 Step 8
+Standard input (stdin) can also be redirected. Normally stdin comes from the keyboard, but
+sometimes you want it to come from a file instead. For example, the tr command translates
+characters, but it only accepts data from stdin, never from a file name given as an argument.
+This is great when you want to do something like capitalize data that is inputted from the
+keyboard (Note: Press Control+d, to signal the tr command to stop processing standard input):
+
+tr a-z A-Z
+this is interesting
+how do I stop this?
+^D
+
+Your output should be similar to the following:
+
+sysadmin@localhost:~$ tr a-z A-Z
+this is interesting
+THIS IS INTERESTING
+how do I stop this?
+HOW DO I STOP THIS?
+sysadmin@localhost:~$
+
+Note: ^D symbolizes Control+d
+
+10.2.9 Step 9
+The tr command accepts keyboard input (stdin), translates the characters and then redirects
+the output to stdout. To create a file of all lower-case characters, execute the following:
+
+tr A-Z a-z > myfile
+Wow, I SEE NOW
+This WORKS!
+
+Your output should be similar to the following:
+
+6
+
+
+
+Press the Enter key to make sure your cursor is on the line below "This works!", then use
+Control+d to stop input. To verify you created the file, execute the following command:
+cat myfile
+
+Your output should be similar to the following:
+
+10.2.10 Step 10
+Execute the following commands to use the tr command by redirecting stdin from a file:
+
+cat myfile
+tr a-z A-Z < myfile
+
+Your output should be similar to the following:
+
+7
+
+
+
+10.2.11 Step 11
+Another popular form of redirection is to take the output of one command and send it into another
+command as input. For example, the output of some commands can be massive, resulting in the
+output scrolling off the screen too quickly to read. Execute the following command to take the
+output of the ls command and send it into the more command, which displays one page of data
+at a time:
+ls -l /etc | more
+
+Your output should be similar to the following:
+sysadmin@localhost:~$ ls -l /etc | more
+total 372
+-rw-r--r-- 1 root root 2981 Jan 28 2015 adduser.conf
+-rw-r--r-- 1 root root 10 Jan 28 2015 adjtime
+drwxr-xr-x 1 root root 900 Jan 29 2015 alternatives
+drwxr-xr-x 1 root root 114 Jan 29 2015 apparmor.d
+drwxr-xr-x 1 root root 168 Oct 1 2014 apt
+-rw-r--r-- 1 root root 2076 Apr 3 2012 bash.bashrc
+drwxr-xr-x 1 root root 72 Jan 28 2015 bash_completion.d
+drwxr-sr-x 1 root bind 342 Jan 29 2015 bind
+-rw-r--r-- 1 root root 356 Apr 19 2012 bindresvport.blacklist
+-rw-r--r-- 1 root root 321 Mar 30 2012 blkid.conf
+lrwxrwxrwx 1 root root 15 Jun 18 2014 blkid.tab -> /dev/.blkid.tab
+drwxr-xr-x 1 root root 16 Jan 29 2015 ca-certificates
+-rw-r--r-- 1 root root 7464 Jan 29 2015 ca-certificates.conf
+drwxr-xr-x 1 root root 14 Jan 29 2015 calendar
+drwxr-xr-x 1 root root 24 Jan 29 2015 cron.d
+drwxr-xr-x 1 root root 134 Jan 29 2015 cron.daily
+drwxr-xr-x 1 root root 24 Jan 29 2015 cron.hourly
+drwxr-xr-x 1 root root 24 Jan 29 2015 cron.monthly
+-rw-r--r-- 1 root root 2969 Mar 15 2012 debconf.conf
+--More--
+
+You will need to press the spacebar to continue or you can also press CTRL+c to escape this
+listing.
+
+The cut command is useful for extracting fields from files that are either delimited by a character,
+like the colon : in /etc/passwd, or that have a fixed width. It will be used in the next few
+
+8
+
+
+
+examples as it typically provides a great deal of output that we can use to demonstrate using the
+| character.
+
+10.2.12 Step 12
+In the following example, you will use a command called cut to extract all of the usernames from
+a database called /etc/passwd (a file that contains user account information). First, try running
+the cut command by itself:
+
+cut -d: -f1 /etc/passwd
+
+A portion of the command output is shown in the graphic below.
+
+9
+
+
+
+This command extracts the first field (username) from each line of /etc/passwd. Here's a
+breakdown:
+
+● cut: The command itself.
+● -d:: Specifies that the colon (:) is the delimiter.
+● -f1: Extracts the first field.
+
+10.2.13 Step 13
+The output in the previous example was unordered and scrolled off the screen. In the next step
+you are going to take the output of the cut command and send it into the sort command to
+provide some order to the output:
+cut -d: -f1 /etc/passwd | sort
+
+A portion of the command output is shown in the graphic below.
+
+10
+
+
+
+11
+
+
+
+10.2.14 Step 14
+Now the output is sorted, but it still scrolls off the screen. Send the output of the sort command
+to the more command to solve this problem:
+
+cut -d: -f1 /etc/passwd | sort | more
+
+12
+
+
+
+10.3 Viewing Large Text Files
+Although large text files can be viewed with the cat command, it is inconvenient to scroll
+backwards towards the top of the file. Additionally, really large files can't be displayed in this
+manner because the terminal window only stores a specific number of lines of output in memory.
+
+The use of the more or less commands allows for the user to the view data a "page" or a line at
+a time. These "pager" commands also permit other forms of navigation and searching that will be
+demonstrated in this section.
+
+Note
+
+Examples are given using both the more and less commands. Most of the time, the commands
+work the same, however, the less command is more advanced and has more features. The
+more command is still important to know because some Linux distributions don't have the less
+command, but all Linux distributions have the more command.
+
+If you are not interested in viewing the entire file or output of a command, then there are
+numerous commands that are able to filter the contents of the file or output. In this module, you
+will learn the use of the head and tail commands to be able to extract information from the top
+or bottom of the output of a command or file contents.
+
+10.3.1 Step 1
+The /etc/passwd is likely too large to be displayed on the screen without scrolling the screen.
+To see a demonstration of this, use the cat command to display the entire contents of the
+/etc/passwdfile:
+
+cat /etc/passwd
+
+Your output should be similar to the following:
+
+13
+
+
+
+10.3.2 Step 2
+Use the more command to display the entire contents of the /etc/passwd file:
+
+more /etc/passwd
+
+Your output should be similar to the following:
+sysadmin@localhost:~$ more /etc/passwd
+
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+bin:x:2:2:bin:/bin:/bin/sh
+sys:x:3:3:sys:/dev:/bin/sh
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/bin/sh
+man:x:6:12:man:/var/cache/man:/bin/sh
+lp:x:7:7:lp:/var/spool/lpd:/bin/sh
+mail:x:8:8:mail:/var/mail:/bin/sh
+news:x:9:9:news:/var/spool/news:/bin/sh
+
+14
+
+
+
+uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
+proxy:x:13:13:proxy:/bin:/bin/sh
+www-data:x:33:33:www-data:/var/www:/bin/sh
+backup:x:34:34:backup:/var/backups:/bin/sh
+list:x:38:38:Mailing List Manager:/var/list:/bin/sh
+irc:x:39:39:ircd:/var/run/ircd:/bin/sh
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
+nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
+libuuid:x:100:101::/var/lib/libuuid:/bin/sh
+syslog:x:101:103::/home/syslog:/bin/false
+bind:x:102:105::/var/cache/bind:/bin/false
+sshd:x:103:65534::/var/run/sshd:/usr/sbin/nologin
+operator:x:1000:37::/root:/bin/sh
+--More--(92%)
+
+Note
+
+The --More--(92%) indicates you are "in" the more command and 92% through the current
+data.
+
+10.3.3 Step 3
+While you are in the more command, you can view the help screen by pressing the h key:
+
+h
+
+Your output should be similar to the following:
+Most commands optionally preceded by integer argument k. Defaults in
+brackets
+Star (*) indicates argument becomes new default.
+-----------------------------------------------------------------------------
+-
+<space> Display next k lines of text [current screen size]
+z Display next k lines of text [current screen size]*
+<return> Display next k lines of text [1]*
+d or ctrl-D Scroll k lines [current scroll size, initially 11]*
+q or Q or <interrupt> Exit from more
+s Skip forward k lines of text [1]
+f Skip forward k screenfuls of text [1]
+b or ctrl-B Skip backwards k screenfuls of text [1]
+' Go to place where previous search started
+= Display current line number
+/<regular expression> Search for kth occurrence of regular expression [1]
+n Search for kth occurrence of last r.e [1]
+!<cmd> or :!<cmd> Execute <cmd> in a subshell
+v Start up /usr/bin/vi at current line
+ctrl-L Redraw screen
+:n Go to kth next file [1]
+:p Go to kth previous file [1]
+:f Display current file name and line number
+
+15
+
+
+
+. Repeat previous command
+-----------------------------------------------------------------------------
+-
+--More--(92%)
+
+10.3.4 Step 4
+Press the Spacebar to view the rest of the document:
+<SPACE>
+
+In the next example, you will learn how to search a document using either the more or less
+commands.
+
+Searching for a pattern within both the more and less commands is done by typing the slash /,
+followed by the pattern to find. If a match is found, the screen should scroll to the first match. To
+move forward to the next match, press the n key. With the less command you can also move
+backwards to previous matches by pressing the N (capital n) key.
+
+10.3.5 Step 5
+Use the less command to display the entire contents of the /etc/passwd file. Then search for
+the word bin, use n to move forward, and N to move backwards. Finally, quit the less pager by
+typing the letter q:
+less /etc/passwd
+/bin
+nnnNNNq
+
+Important
+
+Unlike the more command which automatically exits when you reach the end of a file, you must
+press a quit key such as q to quit the less program.
+
+10.3.6 Step 6
+You can use the head command to display the top part of a file. By default, the head command
+will display the first ten lines of the file:
+head /etc/passwd
+
+Your output should be similar to the following:
+
+16
+
+
+
+10.3.7 Step 7
+Use the tail command to display the last ten lines of the /etc/passwd file:
+
+tail /etc/passwd
+
+Your output should be similar to the following:
+
+17
+
+
+
+10.3.8 Step 8
+Use the head command to display the first two lines of the /etc/passwd file:
+
+head -2 /etc/passwd
+
+Your output should be similar to the following:
+
+10.3.9 Step 9
+Execute the following command line to pipe the output of the ls command to the tail
+command, displaying the last five file names in the /etc directory:
+
+ls /etc | tail -5
+
+Your output should be similar to the following:
+sysadmin@localhost:~$ ls /etc | tail -5
+updatedb.conf
+vim
+vtrgb
+wgetrc
+xdg
+sysadmin@localhost:~$
+
+As you've seen, both head and tail commands output ten lines by default. You could also use
+an option -# (or you can use the option -n #, where # is a number of lines to output). Both
+commands can be used to read standard input from a pipe that receives output from a command.
+
+You have also seen where head and tail commands are different: the head command starts
+counting its lines to output from the top of the data, whereas the tail command counts the
+number of lines to output from the bottom of the data. There are some additional differences
+between these two commands as demonstrated in the next few tasks.
+
+10.3.10 Step 10
+Another way to specify how many lines to output with the head command is to use the option -n
+-#, where # is the number of lines counted from the bottom of the output to exclude. Notice the
+
+18
+
+
+
+minus symbol - in front of the #. For example, if the /etc/passwd contains 27 lines, the
+following command will display lines 1-7, excluding the last twenty lines:
+head -n -20 /etc/passwd
+
+sysadmin@localhost:~$ head -n -20 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+sysadmin@localhost:~$
+
+10.4 Searching Text Using Regular
+Expressions
+In this task, you will use the grep family of commands with regular expressions in order to search for
+a specific string of characters in a stream of data (for example, a text file).
+
+The grep command uses basic regular expressions, special characters like wildcards that match
+patterns in data. The grep command returns the entire line containing the pattern that matches.
+
+The -E option to the grep command can be used to perform searches with extended regular
+expressions, essentially more powerful regular expressions. Another way to use extended regular
+expressions is to use the egrep command.
+
+The fgrep command is used to match literal characters, ignoring the special meaning of regular
+expression characters.
+
+10.4.1 Step 1
+The use of grep in its simplest form is to search for a given string of characters, such as sshd in
+the /etc/passwd file. The grep command will print the entire line containing the match:
+
+cd /etc
+
+grep sshd passwd
+
+Your output should be similar to the following:
+
+sysadmin@localhost:~$ cd /etc
+
+19
+
+
+
+sysadmin@localhost:/etc$ grep sshd passwd
+
+sshd:x:106:65534::/run/sshd:/usr/sbin/nologin
+
+sysadmin@localhost:/etc$
+
+10.4.2 Step 2
+Regular expressions are "greedy" in the sense that they will match every single instance of the
+specified pattern:
+
+grep root passwd
+
+Your output should be similar to the following:
+
+Note the red highlights indicate what exactly was matched. You can also see that all occurrences of
+root were matched on each line.
+
+10.4.3 Step 3
+To limit the output, you can use regular expressions to specify a more precise pattern. For
+example, the caret ^ character can be used to match a pattern at the beginning of a line; so,
+when you execute the following command line, only lines that begin with root should be
+matched and displayed:
+
+grep '^root' passwd
+
+Your output should be similar to the following:
+
+sysadmin@localhost:/etc$ grep '^root' passwd
+
+root:x:0:0:root:/root:/bin/bash
+
+sysadmin@localhost:/etc$
+
+Note that there are two additional instances of the word root but only the one appearing at the
+beginning of the line is matched (displayed in red).
+
+Best Practice
+
+20
+
+
+
+Use single quotes (not double quotes) around regular expressions to prevent the shell program
+from trying to interpret them.
+
+10.4.4 Step 4
+Match the pattern sync anywhere on a line:
+
+grep 'sync' passwd
+
+Your output should be similar to the following:
+
+sysadmin@localhost:/etc$ grep 'sync' passwd
+
+sync:x:4:65534:sync:/bin:/bin/sync
+
+sysadmin@localhost:/etc$
+
+10.4.5 Step 5
+Use the $ symbol to match the pattern sync at the end of a line:
+
+grep 'sync$' passwd
+
+Your output should be similar to the following:
+
+sysadmin@localhost:/etc$ grep 'sync$' passwd
+
+sync:x:4:65534:sync:/bin:/bin/sync
+
+sysadmin@localhost:/etc$
+
+The command in the previous step matched every instance; the second only matches the
+instance at the end of the line.
+
+10.4.6 Step 6
+Use the period character . to match any single character. For example, execute the following
+command to match any character followed by a 'y':
+
+grep '.y' passwd
+
+Your output should be similar to the following:
+
+sysadmin@localhost:/etc$ grep '.y' passwd
+
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+
+21
+
+
+
+sync:x:4:65534:sync:/bin:/bin/sync
+
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologi
+
+n
+
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+
+systemd-network:x:101:102:systemd Network Management,,,:/run/systemd/netif:/usr/
+
+sbin/nologin
+
+systemd-resolve:x:102:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nol
+
+ogin
+
+syslog:x:103:106::/home/syslog:/usr/sbin/nologin
+
+sysadmin:x:1001:1001:System Administrator,,,,:/home/sysadmin:/bin/bash
+
+sysadmin@localhost:/etc$
+
+10.4.7 Step 7
+The pipe character, |, or "alternation operator", acts as an "or" operator. For example, execute
+the following to attempt to match either sshd, root or operator:
+
+grep 'sshd|root|operator' passwd
+
+Your output should be similar to the following:
+
+sysadmin@localhost:/etc$ grep 'sshd|root|operator' passwd
+
+sysadmin@localhost:/etc$
+
+Observe that the grep command does not recognize the pipe as the alternation operator by
+default. The grep command is actually including the pipe as a plain character in the pattern to be
+matched. The use of either grep -E or egrep will allow the use of the extended regular
+expressions, including alternation.
+
+10.4.8 Step 8
+Use the -E switch to allow grep to operate in extended mode in order to recognize the
+alternation operator:
+
+grep -E 'sshd|root|operator' passwd
+
+22
+
+
+
+Your output should be similar to the following:
+
+sysadmin@localhost:/etc$ grep -E 'sshd|root|operator' passwd
+
+root:x:0:0:root:/root:/bin/bash
+
+sshd:x:103:65534::/var/run/sshd:/usr/sbin/nologin
+
+operator:x:1000:37::/root:/bin/sh
+
+sysadmin@localhost:/etc$
+
+10.4.9 Step 9
+Use another extended regular expression, this time with egrep with alternation in a group to
+match a pattern. The strings nob and non will match:
+
+egrep 'no(b|n)' passwd
+
+Your output should be similar to the following:
+
+sysadmin@localhost:/etc$ egrep 'no(b|n)' passwd
+
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+
+_apt:x:100:65534::/nonexistent:/usr/sbin/nologin
+
+messagebus:x:104:107::/nonexistent:/usr/sbin/nologin
+
+sysadmin@localhost:/etc$
+
+Note
+
+The parentheses, ( ), were used to limit the "scope" of the | character. Without them, a pattern
+such as nob|n would have meant "match either nob or n”.
+
+10.4.10 Step 10
+The [ ] characters can also be used to match a single character. However, unlike the period
+character ., the [ ] characters are used to specify exactly what character you want to match.
+For example, if you want to match a numeric character, you can specify [0-9]. Execute the
+following command for a demonstration:
+
+head passwd | grep '[0-9]'
+
+Your output should be similar to the following:
+
+23
+
+
+
+sysadmin@localhost:/etc$ head passwd | grep '[0-9]'
+
+root:x:0:0:root:/root:/bin/bash
+
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+
+sync:x:4:65534:sync:/bin:/bin/sync
+
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+
+sysadmin@localhost:/etc$
+
+Note
+
+The head command was used to limit the output of the grep command.
+
+10.4.11 Step 11
+Suppose you want to search for a pattern containing a sequence of three digits. You can use { }
+
+characters with a number to express that you want to repeat a pattern a specific number of times;
+for example: {3}. The use of the numeric qualifier requires the extended mode of grep:
+
+grep -E '[0-9]{3}' passwd
+
+Your output should be similar to the following:
+
+sysadmin@localhost:/etc$ grep -E '[0-9]{3}' passwd
+
+sync:x:4:65534:sync:/bin:/bin/sync
+
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+
+_apt:x:100:65534::/nonexistent:/usr/sbin/nologin
+
+systemd-network:x:101:102:systemd Network Management,,,:/run/systemd/netif:/usr/
+
+sbin/nologin
+
+systemd-resolve:x:102:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nol
+
+ogin
+
+24
+
+
+
+syslog:x:103:106::/home/syslog:/usr/sbin/nologin
+
+messagebus:x:104:107::/nonexistent:/usr/sbin/nologin
+
+bind:x:105:110::/var/cache/bind:/usr/sbin/nologin
+
+sshd:x:106:65534::/run/sshd:/usr/sbin/nologin
+
+operator:x:1000:37::/root:/bin/sh
+
+sysadmin:x:1001:1001:System Administrator,,,,:/home/sysadmin:/bin/bash
+
+sysadmin@localhost:/etc$
+
+25
+
+
+
+
+
+
+
+11.1 Introduction
+This is Lab 11: Basic Scripting. By performing this lab, students will learn how to use the vi
+editor to create basic shell scripts using basic shell commands, variables and control statements.
+
+In this lab, you will perform the following tasks:
+
+● Use the vi editor to create and edit text files.
+● Create simple shell scripts.
+● Create shell scripts with conditional execution.
+● Use loops in the script for repetition.
+
+11.2 Basic Text Editing
+Most distributions of Linux have more than one text editor. These may include simple text-only
+editors, such as nano, or graphical editors, such as gedit.
+
+In this task, you will explore some of the basic text editing features of the vi editor. All
+distributions have some version of vi. The vi editor is a powerful text editor with a bit of a
+learning curve, but capable of performing a wide variety of text editing tasks.
+
+The vi editor has two modes: insert and command. In insert mode, you add text to a document.
+In command mode, operations such as navigation, searching, saving, and exiting the editor can
+be performed .
+
+First install the Vim editor program so that you can use the Vi editor.
+
+11.2.1 Step 1
+1
+
+
+
+To create a new file, execute the following command:
+vi myfile
+
+sysadmin@localhost:~$ vi myfile
+
+Type an i to enter the “insert” mode of vi (more about this later). Then enter the following text:
+Welcome to the vi editor.
+
+It is a very powerful text editor.
+
+Especially for those who master it.
+
+Then press the Esc key to leave insert mode. Type :wq to write the file to disk and quit.
+
+Note
+
+Each of the previous commands will be covered in greater detail later in this lab. The purpose of
+the previous step was to create a file to work with during this lab.
+
+11.2.2 Step 2
+Invoke the vi editor to modify the file you created. When vi is invoked, you are placed in
+command mode by default:
+vi myfile
+
+sysadmin@localhost:~$ vi myfile
+
+Your output should be similar to the following:
+Welcome to the vi editor.
+It is a very powerful text editor.
+Especially for those who master it.
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+
+2
+
+
+
+~
+~
+~
+~
+~
+~
+~
+~
+~
+"myfile" 3 lines, 97 characters
+
+Notice that in the bottom-left, the file name, the number of lines, and the number of characters in
+the file are displayed.
+
+11.2.3 Step 3
+Press each of the following keys two times and observe how the cursor moves. Remember that you
+are in command mode:
+
+Function
+
+Moves cursor down one line (same as down arrow)
+
+Moves cursor up line (same as up arrow)
+
+Moves cursor to the right one character (same as right arrow)
+
+Moves cursor to the left one character (same as left arrow)
+
+Moves cursor to beginning of next word
+
+Moves cursor to end of word
+
+Moves cursor to beginning of previous word
+
+Warning: If you type any other keys then those listed above, you may end up in insert mode.
+Don't panic! Press the Esc key, then :q! + the Enter key. This should exit vi without saving
+any changes. Then execute vi myfile and you are back in the vi editor!
+
+3
+
+
+
+11.2.4 Step 4
+More vi cursor navigation: press the following keys and observe how the cursor moves:
+
+Keys Function
+
+$ Moves cursor to end of current line (same as End key)
+
+0 (zero) Moves cursor beginning of current line (same as Home key)
+
+3G Jumps to third line (nG jumps to the nth line)
+
+1G Jumps to first line
+
+Shift+G Jumps to the last line
+
+11.2.5 Step 5
+Move the cursor to the beginning of the word "very" by pressing the following keys:
+3G (hold down the number "3" key and press the letter "g")
+k
+8l (that's the number eight followed by the letter "l")
+
+The cursor should be on the letter v of the word "very" as shown below:
+
+Welcome to the vi editor.
+It is a very powerful text editor.
+Especially for those who master it.
+~
+~
+
+11.2.6 Step 6
+Delete the word “very” by issuing the command dw (delete word):
+dw
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It is a powerful text editor.
+Especially for those who master it.
+~
+
+4
+
+
+
+11.2.7 Step 7
+Undo the last operation:
+u
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It is a very powerful text editor.
+Especially for those who master it.
+~
+~
+
+11.2.8 Step 8
+Delete two words:
+2dw
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It is a text editor.
+Especially for those who master it.
+~
+~
+
+11.2.9 Step 9
+Undo the last operation:
+u
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It is a very powerful text editor.
+Especially for those who master it.
+~
+~
+
+11.2.10 Step 10
+Delete four characters, one at a time:
+xxxx
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+
+5
+
+
+
+It is a powerful text editor.
+Especially for those who master it.
+~
+
+11.2.11 Step 11
+Undo the last 4 operations and recover the deleted characters:
+4u
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It is a very powerful text editor.
+Especially for those who master it.
+~
+~
+
+11.2.12 Step 12
+Delete 14 characters:
+14x
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It is a text editor.
+Especially for those who master it.
+~
+~
+
+11.2.13 Step 13
+Undo the last operation:
+u
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It is a very powerful text editor.
+Especially for those who master it.
+~
+~
+
+11.2.14 Step 14
+Delete the five characters to the left of the cursor (type 5 then Shift+x):
+5X
+
+6
+
+
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It very powerful text editor.
+Especially for those who master it.
+~
+~
+
+11.2.15 Step 15
+Undo the last operation:
+u
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It is a very powerful text editor.
+Especially for those who master it.
+~
+~
+
+11.2.15 Step 15
+Undo the last operation:
+u
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It is a very powerful text editor.
+Especially for those who master it.
+~
+~
+
+11.2.18 Step 18
+Undo the last two operations:
+2u
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It is a very powerful text editor.
+Especially for those who master it.
+~
+~
+
+11.2.19 Step 19
+Delete two lines, the current and the next:
+
+7
+
+
+
+2dd
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+~
+~
+
+11.2.20 Step 20
+Undo the last operation:
+u
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It is a very powerful text editor.
+Especially for those who master it.
+~
+~
+
+11.2.21 Step 21
+Move to the fourth word then delete from the current position to the end of the line Shift+D:
+4w
+D
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+It is a very
+Especially for those who master it.
+~
+~
+
+The command d$ also deletes to end of line. The $ character, as seen earlier, advances to end of
+line. Thus, d$ deletes to end of line.
+
+11.2.22 Step 22
+Undo the last operation:
+u
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+
+It is a very powerful text editor.
+
+8
+
+
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.23 Step 23
+Join two lines, the current and the next by typing a capital J (Shift+J):
+J
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+
+It is a very powerful text editor. Especially for those who master it.
+
+~
+
+~
+
+11.2.24 Step 24
+Undo the last operation:
+u
+
+Your screen should look similar to the following:
+Welcome to the vi editor.
+
+It is a very powerful text editor.
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.25 Step 25
+Copy (or “yank”) the current word:
+
+yw
+
+When you copy text, no change will take place on the screen.
+
+11.2.26 Step 26
+Paste (or “put”) the copied word before the current cursor by typing Shift+p:
+
+9
+
+
+
+P
+
+Your screen should look similar to the following:
+
+Welcome to the vi editor.
+
+It is a very powerful powerful text editor.
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.27 Step 27
+Undo the last operation:
+
+u
+
+Your screen should look similar to the following:
+
+Welcome to the vi editor.
+
+It is a very powerful text editor.
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.28 Step 28
+Move to the first line, then join three lines:
+
+1G
+
+3J
+
+Your screen should look similar to the following:
+
+Welcome to the vi editor. It is a very powerful text editor. Especially for
+those who master it.
+
+~
+
+10
+
+
+
+~
+
+11.2.29 Step 29
+Undo the last operation:
+
+u
+
+Your screen should look similar to the following:
+
+Welcome to the vi editor.
+
+It is a very powerful text editor.
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.30 Step 30
+Search for and delete the word text (add a space after the word text):
+
+:%s/text //g
+
+Your screen should look similar to the following:
+
+Welcome to the vi editor.
+
+It is a very powerful editor.
+
+Especially for those who master it.
+
+~
+
+~
+
+~
+
+~
+
+~
+
+~
+
+11
+
+
+
+~
+
+~
+
+~
+
+~
+
+~
+
+~
+
+~
+
+~
+
+~
+
+~
+
+~
+
+~
+
+~
+
+~
+
+:%s/text //g
+
+11.2.31 Step 31
+Navigate to beginning of file, then press i to enter insert mode to add text:
+
+Keys Function
+
+1G Go to beginning of file (Shift+G)
+
+12
+
+
+
+i Enter insert mode
+
+Hello and Add text to document with a space after “and”
+
+Hello and Welcome to the vi editor.
+
+It is a very powerful editor.
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.32 Step 32
+Exit insert mode and return to command mode by pressing the Escape key:
+
+ESC
+
+11.2.33 Step 33
+Move forward one space by pressing the lower case l to place the cursor on the W and toggle it
+to lower case by pressing the tilde (~):
+
+Keys Function
+
+l Lowercase ‘L’ moves forward one space
+
+~ Shift+` changes letter to lower case
+
+Your screen should look similar to the following:
+
+Hello and welcome to the vi editor.
+
+13
+
+
+
+It is a very powerful editor.
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.34 Step 34
+Save the file. Press the Esc key to ensure you are in command mode. Then type :w and the
+Enter key:
+
+:w
+
+11.2.35 Step 35
+When you press Enter to commit the change, note the message in lower left indicating the file
+has been written:
+
+~
+
+~
+
+"myfile" 3 lines, 102 characters written
+
+11.2.36 Step 36
+Navigate to the space between the word "powerful" and "editor" in the second line as shown
+in the image below. You could press j followed by 10l or use the arrow keys:
+
+Command Function/Keys
+
+j Move down to second line
+
+10l 10 followed by the lowercase ‘L’
+
+Your screen should look similar to the following:
+
+14
+
+
+
+Hello and welcome to the vi editor.
+
+It is a very powerful editor.
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.37 Step 37
+Append text to the right of the cursor by pressing the letter a. This moves the cursor to the right
+and enters insert mode. Type the word text followed by a space as shown in image below:
+
+Command Function/Keys
+
+a Enter insert mode.
+
+text text followed by a space
+
+Hello and welcome to the vi editor.
+
+It is a very powerful text editor.
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.38 Step 38
+Exit insert mode by pressing the Esc key.
+
+11.2.39 Step 39
+Open a blank line below the current line by typing a lowercase letter o:
+
+15
+
+
+
+o
+
+Your screen should look similar to the following:
+
+Hello and welcome to the vi editor.
+
+It is a very powerful text editor.
+
+_
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.40 Step 40
+Enter the following text:
+
+This line was added by pressing lowercase o.
+
+Your screen should look similar to the following:
+
+Hello and welcome to the vi editor.
+
+It is a very powerful text editor.
+
+This line was added by pressing lowercase o.
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.41 Step 41
+Exit insert mode by pressing the Esc key.
+
+11.2.42 Step 42
+Open a blank line above the current line by pressing uppercase O:
+
+O
+
+Your screen should look similar to the following:
+
+16
+
+
+
+Hello and welcome to the vi editor.
+
+It is a very powerful text editor.
+
+This line was added by pressing lowercase o.
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.43 Step 43
+Enter the following text:
+
+You just pressed O to open a line above.
+
+Your screen should look similar to the following:
+
+Hello and welcome to the vi editor.
+
+It is a very powerful text editor.
+
+You just pressed O to open a line above.
+
+This line was added by pressing lowercase o.
+
+Especially for those who master it.
+
+~
+
+~
+
+11.2.44 Step 44
+Exit insert mode by pressing the Esc key
+
+11.2.45 Step 45
+Save the file and close the vi editor using any one of the following methods that saves changes:
+
+17
+
+
+
+Command Function/Keys
+
+:x Will save and close the file.
+
+:wq Will write to file and quit.
+
+:wq! Will write to a read-only file, if possible, and quit.
+
+ZZ Will save and close. Notice that no colon : is used in this case.
+
+:q! Exit without saving changes
+
+:e! Discard changes and reload file
+
+:w! Write to read-only, if possible.
+
+11.2.46 Step 46
+Once again open myfile using the vi editor:
+
+vi myfile
+
+sysadmin@localhost:~$ vi myfile
+
+11.2.47 Step 47
+Navigate to the third line, and delete the third and fourth lines:
+
+3G
+
+2dd
+
+Your screen should look similar to the following:
+
+Hello and welcome to the vi editor.
+
+It is a very powerful text editor.
+
+Especially for those who master it.
+
+~
+
+18
+
+
+
+~
+
+11.2.48 Step 48
+Press the Esc key to confirm you are in command mode.
+
+11.2.49 Step 49
+Quit the vi editor without saving your changes:
+
+:q!
+
+11.3 Basic Shell Scripting
+Shell scripting allows you to take a complex sequence of commands, place them into a file and
+then run the file as a program. This saves you the time of having to repeatedly type a long
+sequence of commands that you routinely use.
+
+This lab will focus on how to create simple shell scripts. For the purpose of this lab, it is assumed
+that you know how to use a text editor. Feel free to use the editor of your choice: vi, nano,
+gedit or any other editor that you like.
+
+First install the Vim editor program in Ubuntu so that you can create the scripts.
+
+11.3.1 Step 1
+To create a simple shell script, you just need to create a text file and add commands. Create a
+file called sample.sh and add the following lines:
+
+echo "Hello there! Here is the calendar for this month:"
+
+cal
+
+19
+
+
+
+11.3.2 Step 2
+To make it clear that this is a BASH shell script, you need to include a special line at the top of
+the file called a "shbang" (or "shebang"). This line starts with #! and then contains the path to the
+BASH shell executable. Add the following line at the top of the sample.sh file:
+
+#!/bin/bash
+
+11.3.3 Step 3
+One way that you can run this program is by typing bash before the filename. Execute the
+following:
+
+bash sample.sh
+
+11.3.4 Step 4
+You can avoid having to type bash in front of the filename by making the file "executable" for all
+users. Run the following commands:
+
+20
+
+
+
+ls -l sample.sh
+
+chmod a+x sample.sh
+
+ls -l sample.sh
+
+./sample.sh
+
+11.3.5 Step 5
+A common feature used in scripting is "backquoting". With this technique, you can run a shell
+command "within" another shell command. The outcome of the internal command will be
+returned as an argument to the external command.
+
+Add the following to the bottom of the sample.sh file:
+
+vi sample.sh
+
+echo "Today is" date +%A
+
+21
+
+
+
+Exit insert mode by pressing Esc, then type :wq! and hit Enter to save and exit the file.
+
+Now execute the sample.sh file:
+
+cat sample.sh
+
+./sample.sh
+
+11.3.6 Step 6
+You have been using ./ in front of the sample.sh filename to indicate that the file is in the
+current directory. Execute the following to see how the shell would fail to find the file if you don't
+use the ./:
+
+sample.sh
+
+Your screen should look like the following:
+
+22
+
+
+
+11.3.7 Step 7
+Recall that the $PATH variable is used to search for commands that you type. Execute the
+following to see the $PATH variable for the sysadmin account:
+
+echo $PATH
+
+11.3.8 Step 8
+Note that /home/sysadmin/bin is one of the directories in the $PATH variable. This is a great
+place to put your shell scripts:
+
+mkdir bin
+
+mv sample.sh bin
+
+sample.sh
+
+23
+
+
+
+11.4 Conditional and Repetitive Execution
+Note that in this section examples that are more complex will be demonstrated. When doing so,
+you will be using a technique to describe what is happening in the program. The technique will
+look like the following:
+
+Enter this column into drive.sh This column describes the code (don't enter into the file)
+
+echo "Please enter your # print a prompt
+age"
+
+read age # read user input and place in $age variable
+
+When following the instructions provided, you are to enter the text from the left column into the
+specified file (drive.sh in the example above). The right column is used to describe specific
+lines in the program. The pound (hash) sign # character is used because in a shell script you can
+place comments within your program by using a #
+
+11.4.1 Step 1
+Scripts that are more complex may make use of conditional execution. A conditional expression,
+like the if statement, can make use of the outcome of a command called test. The test
+
+statement compares two numbers (or two strings) for things like "equal to", "less than", etc.
+
+24
+
+
+
+Create the following drive.sh file and make it executable to see how the if and test
+
+statements work.
+
+vi drive.sh
+
+Begin by placing the following in drive.sh:
+
+Enter this column into drive.sh This column describes the code (do not enter into the file
+
+#!/bin/bash
+
+echo "Please enter your # print a prompt
+age"
+
+read age # read user input and place in the $age variable
+
+if test $age -lt 16 # test $age -lt 16 returns "true" if $age is numerically les
+than 16
+
+then
+
+echo "You are not old # executes when test is true
+enough to drive."
+
+else
+
+echo "You can drive!" # executes when test is false
+
+fi # This ends the if statement
+
+Then make the file executable and run it:
+
+cat drive.sh
+
+25
+
+
+
+chmod a+x drive.sh
+
+./drive.sh
+
+Your screen should look like the following:
+
+Verbally, you could read the if statement as If $age is less than 16, then echo 'You are not old
+enough to drive', else echo 'You can drive!'. The fi ends the if statement.
+
+Warning
+
+$age must be an integer value. If it is not, the program will crash
+
+11.4.2 Step 2
+The test statement is automatically called when you place its arguments within square brackets [
+] surrounded by spaces. Modify the if line of drive.sh so it looks like the following:
+
+if [ $age -lt 16 ]
+
+Then run the program again:
+
+cat drive.sh
+
+./drive.sh
+
+Your screen should look like the following:
+
+26
+
+
+
+To see a full list of test conditions, run the command man test.
+
+Important
+
+There must be spaces around the square brackets. [$age -lt 16] would fail, but [ $age
+
+-lt 16 ] would work.
+
+11.4.3 Step 3
+You can also use the outcome of other shell commands as they all return "success" or "failure".
+For example, create and run the following program, which can be used to determine if a user
+account is on this system.
+
+create a file called check.sh:
+
+vi check.sh
+
+Add the following to check.sh:
+
+#!/bin/bash
+
+echo "Enter a username to check: "
+
+read name
+
+27
+
+
+
+if grep $name /etc/passwd > /dev/null
+
+then
+
+echo "$name is on this system"
+
+else
+
+echo "$name does not exist"
+
+fi
+
+Then run the following commands:
+
+cat check.sh
+
+chmod a+x check.sh
+
+./check.sh
+
+When prompted for a username, give the value of "root". Execute the command again
+(./check.sh) and provide the value of "bobby". Your screen should look like the following:
+
+28
+
+
+
+11.4.4 Step 4
+Another common conditional statement is called the while loop. This statement is used to
+execute code repeatedly as long as a conditional check returns "true". Begin by creating a file
+called num.sh:
+
+vi num.sh
+
+Next, place the following in a file named num.sh:
+
+Enter this into the num.sh file This describes the code (don't enter into the file)
+
+#!/bin/bash
+
+echo "Please enter a number
+greater than 100"
+
+read num
+
+while [ $num -le 100 ]
+
+do # Execute code from do to done if test condition is "tru
+
+echo "$num is NOT greater
+than 100."
+
+echo "Please enter a number
+greater than 100"
+
+read num
+
+done # This ends the while statement
+
+29
+
+
+
+echo "Finally, $num is greate
+than 100"
+
+Then make the file executable and run it:
+
+cat num.sh
+
+chmod a+x num.sh
+
+./num.sh
+
+When prompted for a number, enter 25. When prompted again, enter 99. Finally, enter 101
+when prompted for a number the third time. Your screen should look like the following:
+
+If the conditional check for the while statement ( [ $num -le 100 ] ) returns true, then the
+statements between do and done are executed.
+
+Once those statements have completed executing, the conditional check for the while statement
+is checked again. If true again, then again the statements between do and done are executed.
+
+30
+
+
+
+This will continue repeating until the while condition returns false, or when the value is greater
+than 100.
+
+11.4.5 Step 5
+Scripting code is part of the BASH shell, which means you can use these statements on the
+command line just like you use them in a shell script. This can be useful for a statement like the
+for statement, a statement that will assign a list of values one at a time to a variable. This allows
+you to perform a set of operations on each value. For example, run the following on the
+command line:
+
+for name in /etc/passwd /etc/hosts /etc/group
+
+do
+
+wc $name
+
+done
+
+Your screen should look like the following:
+
+Note that the wc command was run three times: once for /etc/passwd, once for /etc/hosts and
+once for /etc/group.
+
+11.4.6 Step 6
+Often the seq command is used in conjunction with the for statement. The seq command can
+generate a list of integer values, for instance from 1 to 10. For example, run the following on the
+command line to create 12 files named test1, test2, test3, etc. (up to test12):
+
+ls
+
+31
+
+
+
+for num in seq 1 12
+
+do
+
+touch test$num
+
+done
+
+ls
+
+11.4.6 Step 7
+Suppose you want to create a new folder in your home folder called "projects", and within it three
+subfolders: "documents", "code" and "presentations".
+
+Make a script that does this?
+
+32

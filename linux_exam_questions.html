@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Exam - Important Questions & Commands</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #e74c3c;
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-left: 5px solid #e74c3c;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #f39c12;
+            background-color: #fdf2e9;
+            padding: 8px;
+            border-left: 4px solid #f39c12;
+            margin-top: 25px;
+        }
+        h4 {
+            color: #27ae60;
+            background-color: #eafaf1;
+            padding: 6px;
+            border-left: 3px solid #27ae60;
+            margin-top: 20px;
+        }
+        .question {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .command {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .answer {
+            color: #2980b9;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .tip {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .warning {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="background: #2c3e50; color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
+            <a href="index.html" style="color: white; text-decoration: none; font-weight: bold;">🏠 Back to Home</a>
+        </div>
+        <h1>🐧 Linux Exam - Essential Questions & Commands</h1>
+        
+        <h2>🔥 TOP 14 MOST IMPORTANT Questions/Commands</h2>
+        
+        <div class="question">
+            <strong>1. What are the two modes of Vi editor and how do you switch between them?</strong>
+            <div class="answer">
+                • <strong>Command mode</strong> and <strong>Insert mode</strong><br>
+                • Press <span class="command">i</span> or <span class="command">Insert</span> to enter Insert mode<br>
+                • Press <span class="command">Esc</span> to return to Command mode
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>2. How do you save and exit Vi editor?</strong>
+            <div class="answer">
+                • <span class="command">:wq!</span> = Save and exit<br>
+                • <span class="command">:q!</span> = Exit without saving<br>
+                • <span class="command">:w</span> = Save only<br>
+                • <span class="command">ZZ</span> = Save and exit (no colon needed)
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>3. What are the three main glob (wildcard) characters and what do they match?</strong>
+            <div class="answer">
+                • <span class="command">*</span> = Matches zero or more characters<br>
+                • <span class="command">?</span> = Matches exactly one character<br>
+                • <span class="command">[abc]</span> = Matches one character from the list<br>
+                • <span class="command">[a-z]</span> = Matches one character from range<br>
+                • <span class="command">[!abc]</span> = Matches one character NOT in the list
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>4. What's the difference between > and >> redirection?</strong>
+            <div class="answer">
+                • <span class="command">></span> = Overwrites (clobbers) existing file content<br>
+                • <span class="command">>></span> = Appends to existing file content<br>
+                Example: <span class="command">echo "Hello" > file.txt</span> vs <span class="command">echo "World" >> file.txt</span>
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>5. How do you copy, move, and remove files/directories?</strong>
+            <div class="answer">
+                • <span class="command">cp source destination</span> = Copy file<br>
+                • <span class="command">cp -r source dest</span> = Copy directory recursively<br>
+                • <span class="command">mv source destination</span> = Move/rename file<br>
+                • <span class="command">rm filename</span> = Remove file<br>
+                • <span class="command">rm -r directory</span> = Remove directory recursively<br>
+                • <span class="command">rmdir directory</span> = Remove empty directory only
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>6. How do you make a script executable and run it?</strong>
+            <div class="answer">
+                • <span class="command">chmod +x script.sh</span> = Make executable<br>
+                • <span class="command">./script.sh</span> = Run script in current directory<br>
+                • Script must start with <span class="command">#!/bin/bash</span> (shebang)
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>7. What are the standard streams and their file descriptors?</strong>
+            <div class="answer">
+                • <strong>stdin (0)</strong> = Standard input (keyboard)<br>
+                • <strong>stdout (1)</strong> = Standard output (screen)<br>
+                • <strong>stderr (2)</strong> = Standard error (screen)<br>
+                • <span class="command">command 2> error.txt</span> = Redirect errors to file<br>
+                • <span class="command">command > output.txt 2>&1</span> = Redirect both stdout and stderr
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>8. How do you search for text using grep?</strong>
+            <div class="answer">
+                • <span class="command">grep "pattern" filename</span> = Search in file<br>
+                • <span class="command">grep "^root" /etc/passwd</span> = Search lines starting with "root"<br>
+                • <span class="command">grep "sync$" /etc/passwd</span> = Search lines ending with "sync"<br>
+                • <span class="command">cat file | grep "text"</span> = Search using pipe<br>
+                • <span class="command">grep -E "pattern1|pattern2"</span> = Extended regex (OR operator)
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>9. What are the essential Vi navigation and editing commands?</strong>
+            <div class="answer">
+                • <span class="command">h,j,k,l</span> = Navigate left, down, up, right<br>
+                • <span class="command">dd</span> = Delete (cut) current line<br>
+                • <span class="command">yy</span> = Copy (yank) current line<br>
+                • <span class="command">p</span> = Paste<br>
+                • <span class="command">u</span> = Undo<br>
+                • <span class="command">G</span> = Go to end of file<br>
+                • <span class="command">1G</span> = Go to beginning of file<br>
+                • <span class="command">/searchterm</span> = Search forward<br>
+                • <span class="command">n</span> = Next search result
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>10. How do you use pipes (|) and what's their purpose?</strong>
+            <div class="answer">
+                • <span class="command">|</span> = Pipe output of one command to input of another<br>
+                • <span class="command">ls | more</span> = View long listings page by page<br>
+                • <span class="command">cut -d: -f1 /etc/passwd | sort</span> = Extract usernames and sort<br>
+                • <span class="command">command | head -5</span> = Show only first 5 lines<br>
+                • <span class="command">command | tail -5</span> = Show only last 5 lines
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>11. How do you use find command to search for files?</strong>
+            <div class="answer">
+                • <span class="command">find /path -name "filename"</span> = Find by name<br>
+                • <span class="command">find /home -name "*.txt"</span> = Find all .txt files<br>
+                • <span class="command">find ~ -name "bash"</span> = Find in home directory<br>
+                • <span class="command">find /etc -name hosts</span> = Find specific file<br>
+                <div class="tip">Note: find searches recursively through subdirectories</div>
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>12. What are the basic shell script conditional statements?</strong>
+            <div class="answer">
+                • <span class="command">if [ condition ]; then ... else ... fi</span><br>
+                • <span class="command">[ $age -lt 16 ]</span> = Numeric less than<br>
+                • <span class="command">[ $age -gt 18 ]</span> = Numeric greater than<br>
+                • <span class="command">[ $age -eq 21 ]</span> = Numeric equal to<br>
+                • <span class="command">test $age -lt 16</span> = Alternative syntax<br>
+                <div class="tip">Important: Spaces around brackets are required!</div>
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>13. How do you view large files without loading them entirely?</strong>
+            <div class="answer">
+                • <span class="command">more filename</span> = View page by page (spacebar = next page)<br>
+                • <span class="command">less filename</span> = Enhanced viewer (q to quit)<br>
+                • <span class="command">head filename</span> = Show first 10 lines<br>
+                • <span class="command">head -5 filename</span> = Show first 5 lines<br>
+                • <span class="command">tail filename</span> = Show last 10 lines<br>
+                • <span class="command">tail -5 filename</span> = Show last 5 lines
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>14. How do you create and use variables in shell scripts?</strong>
+            <div class="answer">
+                • <span class="command">name="value"</span> = Create variable (no spaces around =)<br>
+                • <span class="command">echo $name</span> = Use variable with $ prefix<br>
+                • <span class="command">read name</span> = Read user input into variable<br>
+                • <span class="command">read -p "Enter name: " name</span> = Read with prompt<br>
+                Example: <span class="command">echo "Hello, $name!"</span>
+            </div>
+        </div>
+
+        <h3>⚡ 12 LESS IMPORTANT (But Still Valuable) Questions</h3>
+
+        <div class="question">
+            <strong>15. How do you create directories and empty files?</strong>
+            <div class="answer">
+                • <span class="command">mkdir dirname</span> = Create directory<br>
+                • <span class="command">mkdir -p path/to/dir</span> = Create nested directories<br>
+                • <span class="command">touch filename</span> = Create empty file<br>
+                • <span class="command">touch file1 file2 file3</span> = Create multiple files
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>16. What are some useful Vi text manipulation commands?</strong>
+            <div class="answer">
+                • <span class="command">dw</span> = Delete word<br>
+                • <span class="command">2dw</span> = Delete 2 words<br>
+                • <span class="command">x</span> = Delete character under cursor<br>
+                • <span class="command">X</span> = Delete character before cursor<br>
+                • <span class="command">D</span> = Delete to end of line<br>
+                • <span class="command">J</span> = Join current line with next line<br>
+                • <span class="command">yw</span> = Yank (copy) word<br>
+                • <span class="command">P</span> = Paste before cursor
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>17. How do you use loops in shell scripts?</strong>
+            <div class="answer">
+                • <strong>For loop:</strong> <span class="command">for i in 1 2 3; do echo $i; done</span><br>
+                • <strong>While loop:</strong> <span class="command">while [ $num -le 100 ]; do ... done</span><br>
+                • <strong>Seq command:</strong> <span class="command">for i in $(seq 1 10); do touch test$i; done</span><br>
+                • <strong>File loop:</strong> <span class="command">for file in /etc/*; do echo $file; done</span>
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>18. What are regular expression patterns in grep?</strong>
+            <div class="answer">
+                • <span class="command">.</span> = Matches any single character<br>
+                • <span class="command">^</span> = Matches beginning of line<br>
+                • <span class="command">$</span> = Matches end of line<br>
+                • <span class="command">[0-9]</span> = Matches any digit<br>
+                • <span class="command">[a-z]</span> = Matches any lowercase letter<br>
+                • <span class="command">{3}</span> = Repeat pattern 3 times (needs -E option)
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>19. How do you copy files with specific options?</strong>
+            <div class="answer">
+                • <span class="command">cp -v source dest</span> = Verbose mode (show what's being done)<br>
+                • <span class="command">cp -p source dest</span> = Preserve timestamps and permissions<br>
+                • <span class="command">cp source .</span> = Copy to current directory (. = current dir)<br>
+                • <span class="command">cp -R source dest</span> = Copy directories recursively
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>20. What are different ways to insert text in Vi?</strong>
+            <div class="answer">
+                • <span class="command">i</span> = Insert before cursor<br>
+                • <span class="command">a</span> = Insert after cursor<br>
+                • <span class="command">o</span> = Open new line below current line<br>
+                • <span class="command">O</span> = Open new line above current line<br>
+                • <span class="command">A</span> = Insert at end of current line<br>
+                • <span class="command">I</span> = Insert at beginning of current line
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>21. How do you search and replace in Vi?</strong>
+            <div class="answer">
+                • <span class="command">:%s/old/new/g</span> = Replace all occurrences in file<br>
+                • <span class="command">:s/old/new/</span> = Replace first occurrence in current line<br>
+                • <span class="command">:1,10s/old/new/g</span> = Replace in lines 1-10<br>
+                • <span class="command">/searchterm</span> = Search forward<br>
+                • <span class="command">n</span> = Next occurrence, <span class="command">N</span> = Previous occurrence
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>22. How do you handle errors in commands and scripts?</strong>
+            <div class="answer">
+                • <span class="command">command 2>/dev/null</span> = Ignore error messages<br>
+                • <span class="command">command 2>error.log</span> = Save errors to file<br>
+                • <span class="command">if grep $name /etc/passwd > /dev/null; then ...</span><br>
+                • Check exit codes: commands return 0 for success, non-zero for failure
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>23. What are useful file listing and viewing commands?</strong>
+            <div class="answer">
+                • <span class="command">ls -l</span> = Long format listing<br>
+                • <span class="command">ls -la</span> = Show hidden files too<br>
+                • <span class="command">cat filename</span> = Display entire file<br>
+                • <span class="command">wc filename</span> = Count lines, words, characters<br>
+                • <span class="command">wc -l filename</span> = Count lines only
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>24. How do you extract fields from delimited files?</strong>
+            <div class="answer">
+                • <span class="command">cut -d: -f1 /etc/passwd</span> = Extract first field (username)<br>
+                • <span class="command">cut -d: -f1,3 /etc/passwd</span> = Extract fields 1 and 3<br>
+                • <span class="command">cut -c1-5 filename</span> = Extract characters 1-5<br>
+                • Often used with pipe: <span class="command">cat file | cut -d, -f2</span>
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>25. How do you create and manage aliases?</strong>
+            <div class="answer">
+                • <span class="command">alias shortname='long command'</span> = Create alias<br>
+                • <span class="command">alias ll='ls -la'</span> = Example alias<br>
+                • <span class="command">alias</span> = Show all aliases<br>
+                • Add to <span class="command">~/.bashrc</span> for permanent aliases<br>
+                • Example: <span class="command">alias uit='shutdown -h now'</span>
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>26. What are file permission commands you should know?</strong>
+            <div class="answer">
+                • <span class="command">chmod +x file</span> = Make file executable<br>
+                • <span class="command">chmod 755 file</span> = Set specific permissions<br>
+                • <span class="command">chmod a+x file</span> = Make executable for all users<br>
+                • <span class="command">ls -l</span> = View file permissions<br>
+                Scripts need execute permission to run with <span class="command">./script.sh</span>
+            </div>
+        </div>
+
+        <h4>📋 ADDITIONAL IMPORTANT CONCEPTS</h4>
+
+        <div class="question">
+            <strong>27. What are essential navigation shortcuts in Vi?</strong>
+            <div class="answer">
+                • <span class="command">$</span> = Move to end of line<br>
+                • <span class="command">0</span> = Move to beginning of line<br>
+                • <span class="command">w</span> = Move to next word<br>
+                • <span class="command">b</span> = Move to previous word<br>
+                • <span class="command">3G</span> = Go to line 3<br>
+                • <span class="command">gg</span> = Go to first line<br>
+                • <span class="command">G</span> = Go to last line
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>28. How do you work with multiple files or data sources?</strong>
+            <div class="answer">
+                • <span class="command">cat file1 file2</span> = Display multiple files<br>
+                • <span class="command">head file1 file2</span> = Show beginning of multiple files<br>
+                • <span class="command">tail file1 file2</span> = Show end of multiple files<br>
+                • <span class="command">grep pattern file1 file2</span> = Search in multiple files
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>29. What are important script execution concepts?</strong>
+            <div class="answer">
+                • Scripts must have <span class="command">#!/bin/bash</span> shebang line<br>
+                • Use <span class="command">./script.sh</span> to run in current directory<br>
+                • Or use <span class="command">bash script.sh</span> without making executable<br>
+                • Place scripts in <span class="command">~/bin</span> to run from anywhere<br>
+                • <span class="command">$PATH</span> variable determines where shell looks for commands
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>30. What are special characters and their uses?</strong>
+            <div class="answer">
+                • <span class="command">~</span> = Home directory shortcut<br>
+                • <span class="command">.</span> = Current directory<br>
+                • <span class="command">..</span> = Parent directory<br>
+                • <span class="command">#</span> = Comment in scripts<br>
+                • <span class="command">;</span> = Command separator<br>
+                • <span class="command">&</span> = Run command in background<br>
+                • <span class="command">\</span> = Escape character
+            </div>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ CRITICAL WARNINGS:</strong><br>
+            • <span class="command">rm -rf /*</span> = NEVER USE! Will delete everything<br>
+            • Always test scripts in safe environment first<br>
+            • Be careful with file permissions and ownership<br>
+            • Make backups before making major changes<br>
+            • Spaces matter in shell commands and conditions!
+        </div>
+
+        <div class="tip">
+            <strong>💡 EXAM TIPS:</strong><br>
+            • Practice Vi editor extensively - it's fundamental<br>
+            • Master file redirection (>, >>, |) - very commonly tested<br>
+            • Understand glob patterns - essential for file operations<br>
+            • Know the difference between find (search files) and grep (search text)<br>
+            • Practice shell scripting with if statements and loops<br>
+            • Remember script execution requires chmod +x permission<br>
+            • Understand the three standard streams (stdin, stdout, stderr)
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; padding: 20px; background-color: #2c3e50; color: white; border-radius: 5px;">
+            <h3>🎯 Good Luck with Your Linux Exam! 🎯</h3>
+            <p>Master these commands and concepts, and you'll be well-prepared!</p>
+        </div>
+    </div>
+</body>
+</html> 

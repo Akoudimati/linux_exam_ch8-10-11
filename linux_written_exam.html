@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linux Written Exam - Questions and Answers</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+        p, div {
+            margin-bottom: 10px;
+        }
+
+        b {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            border-left: 4px solid #27ae60;
+        }
+
+        br {
+            margin-bottom: 8px;
+        }
+
+        /* Question styling */
+        h3 + * {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Answer highlighting */
+        b:contains("Answer:") {
+            background-color: #d4edda;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background-color: white;
+                max-width: none;
+                padding: 10px;
+            }
+            
+            h2 {
+                background: #3498db !important;
+                -webkit-print-color-adjust: exact;
+            }
+            
+            pre {
+                background-color: #f8f9fa !important;
+                color: #333 !important;
+                border: 1px solid #ddd;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            h2 {
+                padding: 10px 15px;
+            }
+            
+            pre {
+                padding: 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div style="background: #2c3e50; color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: bold;">🏠 Back to Home</a>
+    </div>
+    <h1>Linux System Administration Exam - Questions and Answers</h1>
+    
+    <h2>Section 1: Globbing and Wildcards</h2>
+    <h3>Question 1</h3>
+    Write commands using globbing to accomplish the following tasks:
+    <br>a) List all files in the current directory that start with the letter 'D'
+    <br><b>Answer:</b> ls D*
+    <br>b) List all files that are exactly 6 characters long
+    <br><b>Answer:</b> ls ??????
+    <br>c) List all files that start with either 'a' or 'b'
+    <br><b>Answer:</b> ls [ab]*
+
+    <h3>Question 2</h3>
+    Explain what each of the following glob patterns matches:
+    <br>a) *s
+    <br><b>Answer:</b> Matches all files that end with the letter 's'.
+    <br>b) [!DP]*
+    <br><b>Answer:</b> Matches all files that do NOT start with 'D' or 'P'.
+    <br>c) D*n*s
+    <br><b>Answer:</b> Matches files that start with 'D', contain 'n' somewhere, and end with 's'.
+
+    <h3>Question 3</h3>
+    Write a command to display all files in the /etc directory that start with any letter from 'a' to 'm' and end with '.conf'
+    <br><b>Answer:</b> ls /etc/[a-m]*.conf
+
+    <h2>Section 2: File Operations</h2>
+    <h3>Question 4</h3>
+    Write the complete sequence of commands to:
+    <br>a) Create a directory called 'backup' in your home directory
+    <br><b>Answer:</b> mkdir ~/backup
+    <br>b) Copy the file /etc/hosts to the backup directory, preserving all attributes
+    <br><b>Answer:</b> cp -p /etc/hosts ~/backup/
+    <br>c) Rename the copied file to 'hosts_backup'
+    <br><b>Answer:</b> mv ~/backup/hosts ~/backup/hosts_backup
+    <br>d) List the contents of the backup directory with detailed information
+    <br><b>Answer:</b> ls -la ~/backup/
+
+    <h3>Question 5</h3>
+    Explain the difference between the following commands:
+    <br>a) cp -p source destination
+    <br><b>Answer:</b> Preserves file attributes (timestamps, permissions).
+    <br>b) cp -R source destination
+    <br><b>Answer:</b> Copies directories recursively (including subdirectories).
+    <br>c) cp -v source destination
+    <br><b>Answer:</b> Shows verbose output (displays what is being copied).
+
+    <h3>Question 6</h3>
+    Write commands to:
+    <br>a) Remove a file called 'tempfile.txt'
+    <br><b>Answer:</b> rm tempfile.txt
+    <br>b) Remove a directory called 'olddir' and all its contents
+    <br><b>Answer:</b> rm -r olddir
+    <br>c) Remove an empty directory called 'emptydir'
+    <br><b>Answer:</b> rmdir emptydir
+
+    <h2>Section 3: Text Processing and I/O Redirection</h2>
+    <h3>Question 7</h3>
+    Write commands to:
+    <br>a) Display the first 5 lines of /etc/passwd
+    <br><b>Answer:</b> head -5 /etc/passwd
+    <br>b) Display the last 3 lines of /var/log/messages
+    <br><b>Answer:</b> tail -3 /var/log/messages
+    <br>c) Display lines 10-15 of a file called 'data.txt' (use head and tail with pipe)
+    <br><b>Answer:</b> head -15 data.txt | tail -6
+    <br>d) Count the number of lines in /etc/passwd
+    <br><b>Answer:</b> wc -l /etc/passwd
+
+    <h3>Question 8</h3>
+    Explain the difference between:
+    <br>a) echo "Hello World" > file.txt
+    <br><b>Answer:</b> Overwrites the file completely with new content.
+    <br>b) echo "Hello World" >> file.txt
+    <br><b>Answer:</b> Appends content to the end of the file.
+    <br>c) What happens if file.txt doesn't exist in each case?
+    <br><b>Answer:</b> If file.txt doesn't exist, both commands will create it.
+
+    <h3>Question 9</h3>
+    Write a command to:
+    <br>a) List all files in /etc and save the output to a file called 'etc_files.txt'
+    <br><b>Answer:</b> ls /etc > etc_files.txt
+    <br>b) List all files in /home and append the output to 'etc_files.txt'
+    <br><b>Answer:</b> ls /home >> etc_files.txt
+    <br>c) Display the total number of lines in 'etc_files.txt'
+    <br><b>Answer:</b> wc -l etc_files.txt
+
+    <h2>Section 4: Grep and Search Commands</h2>
+    <h3>Question 10</h3>
+    Write grep commands to:
+    <br>a) Find all lines in /etc/passwd that contain the word 'root'
+    <br><b>Answer:</b> grep root /etc/passwd
+    <br>b) Find all lines in /etc/passwd that start with 'root'
+    <br><b>Answer:</b> grep '^root' /etc/passwd
+    <br>c) Find all lines in /etc/passwd that end with 'bash'
+    <br><b>Answer:</b> grep 'bash$' /etc/passwd
+    <br>d) Find all lines in /etc/passwd that contain 'root' and display line numbers
+    <br><b>Answer:</b> grep -n root /etc/passwd
+
+    <h3>Question 11</h3>
+    Write find commands to:
+    <br>a) Find all files named 'test.txt' in the /home directory
+    <br><b>Answer:</b> find /home -name test.txt
+    <br>b) Find all .log files in the current directory and subdirectories
+    <br><b>Answer:</b> find . -name "*.log"
+    <br>c) Find all directories named 'backup' starting from the root directory
+    <br><b>Answer:</b> find / -type d -name backup
+
+    <h2>Section 5: Vi Editor</h2>
+    <h3>Question 12</h3>
+    You are editing a file in vi. Write the exact keystrokes to:
+    <br>a) Enter insert mode and add text
+    <br><b>Answer:</b> i
+    <br>b) Exit insert mode and return to command mode
+    <br><b>Answer:</b> Esc
+    <br>c) Go to the beginning of the file
+    <br><b>Answer:</b> 1G
+    <br>d) Go to the end of the file
+    <br><b>Answer:</b> G
+    <br>e) Delete the current line
+    <br><b>Answer:</b> dd
+    <br>f) Save the file and quit vi
+    <br><b>Answer:</b> :wq
+
+    <h3>Question 13</h3>
+    In vi command mode, write the commands to:
+    <br>a) Search for the word 'error' in the file
+    <br><b>Answer:</b> /error
+    <br>b) Replace all occurrences of 'old' with 'new' in the entire file
+    <br><b>Answer:</b> :%s/old/new/g
+    <br>c) Undo the last change
+    <br><b>Answer:</b> u
+    <br>d) Copy the current line and paste it below
+    <br><b>Answer:</b> yy then p
+
+    <h2>Section 6: Shell Scripting</h2>
+    <h3>Question 14</h3>
+    Write a complete bash script that:
+    <br>1. Asks the user for their name
+    <br>2. Asks the user for their age
+    <br>3. Displays a personalized greeting with their name and age
+    <br>4. Creates a directory with their name
+    <br>5. Creates a file called 'info.txt' in that directory containing their name and age
+    <br>Include the proper shebang line and make sure to show how to make the script executable.
+    <br><b>Answer:</b>
+    <pre>#!/bin/bash
+echo "Welcome to the user information script!"
+read -p "Please enter your name: " name
+read -p "Please enter your age: " age
+echo "Hello, $name! You are $age years old."
+mkdir "$name"
+echo "Name: $name" > "$name/info.txt"
+echo "Age: $age" >> "$name/info.txt"
+echo "Directory '$name' created with your information!"
+# To make executable: chmod +x script.sh</pre>
+
+    <h3>Question 15</h3>
+    Write the commands to:
+    <br>a) Create an alias called 'll' that runs 'ls -la'
+    <br><b>Answer:</b> alias ll='ls -la'
+    <br>b) Create an alias called 'quit' that runs 'exit'
+    <br><b>Answer:</b> alias quit='exit'
+    <br>c) Show all current aliases
+    <br><b>Answer:</b> alias
+
+</body>
+</html> 
